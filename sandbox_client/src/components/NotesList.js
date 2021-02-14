@@ -1,11 +1,11 @@
 import React from 'react'
 import { Modal } from '../components/Modal'
 import { useHistory } from 'react-router-dom'
+import { connect } from 'react-redux'
 
-export const NotesList = ({ notes }) => {
+const NotesList = ( {notes} ) => {
   const history = useHistory()
-
-
+  console.log("noteslist",notes)
   if (!notes.length) {
     return <p className="center">Ссылок пока нет</p>
   }
@@ -51,3 +51,10 @@ export const NotesList = ({ notes }) => {
 
   )
 }
+
+const mapStateToProps = state =>{
+  console.log(state)
+  return {notes: state.notes.notes,token:state.auth.token}
+}
+
+export default connect(mapStateToProps,null)(NotesList)

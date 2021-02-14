@@ -1,4 +1,6 @@
 import { useState, useCallback, useEffect } from 'react'
+import {useDispatch} from 'react-redux'
+import {AUTH_LOGIN} from "../redux/types";
 
 const storageName = 'userData'
 
@@ -7,11 +9,7 @@ export const useAuth = () => {
   const [ready, setReady] = useState(false)
   const [userId, setUserId] = useState(null)
   const [userName, setUserName] = useState(null)
-  
-  
-  //var UsersListToSave=[]
-
-
+  const dispatch = useDispatch()
   
   const login = useCallback((jwtToken, id,name) => {
     setToken(jwtToken)
@@ -32,44 +30,17 @@ export const useAuth = () => {
   
 
 
-  
-  
-
-
-
-
-  const message2 = useCallback((mes) => {
-    if (!document.getElementById('popup_container')) {
-      let div = document.createElement('div')
-      div.id = "popup_container"
-      document.getElementById('root').append(div)
-    }
-    let div = document.createElement('div')
-    div.id = "snackbar"
-    div.className = "show"
-    div.textContent = mes;
-    //console.log(mes)
-
-    document.getElementById('popup_container').append(div)
-
-    setTimeout(() => {
-      div.remove()
-      if (document.getElementById('popup_container') && !document.getElementById('popup_container').children.length) { document.getElementById('popup_container').remove() }
-    }, 3000)
-
-  }, [])
-
 
 
   useEffect(() => {
     const data = JSON.parse(localStorage.getItem(storageName))
 
     if (data && data.token) {
-      login(data.token, data.userId,data.name)
+      dispatch({type:AUTH_LOGIN, payload: data})
     }
     setReady(true)
   }, [login])
 
 
-  return { login, logout, message2,  token, userId, ready,userName }
+  return { login, logout, token, userId, ready,userName }
 }

@@ -1,19 +1,21 @@
 import React, { useState, useContext } from 'react'
+import {useDispatch} from 'react-redux'
+import { reduxLogin } from '../redux/actions.js'
 import {useHistory} from 'react-router-dom'
 import { useHttp } from '../hooks/http.hook'
 import {AuthContext} from '../context/AuthContext'
+import { message } from '../utilites/message.js'
+
 
 
 export const AuthPage = () => {
     const history=useHistory()
     const auth = useContext(AuthContext)
-    const {message2} = useContext(AuthContext)
+    const dispatch = useDispatch()
     const {request} = useHttp()
     const[form,setForm]=useState({
         email:'',password:'',name:''
     })
-    
-
     
 
     const changeHandler = event=>{
@@ -22,21 +24,16 @@ export const AuthPage = () => {
 
 
 
-    const loginHandler = async () => {
-        
-        try{
-            const data = await request('/api/auth/login','POST',{...form})
-            if(data.message){message2(data.message)}
-            
-            auth.login(data.token, data.userId,data.userName)
-            
-            
-        }
-        catch(e){}
-    }
+    // const loginHandler = async () => {
+    //     try{
+    //         const data = await request('/api/auth/login','POST',{...form})
+    //         if(data.message){message(data.message)}
+    //         auth.login(data.token, data.userId,data.userName)
+    //     }
+    //     catch(e){}
+    // }
 
     const switchToPass = async () => {
-        
         const input = document.getElementById('password');
         input.focus();
         input.select();
@@ -45,9 +42,8 @@ export const AuthPage = () => {
     const sendMail = async () => {
         try {
             await request('/api/auth/send', 'POST', { ...form })
-            message2(`Отправлен пароль для: ${form.email} `)
+            message(`Отправлен пароль для: ${form.email} `)
             
-
         }
         catch (e) { }
     }
@@ -73,10 +69,10 @@ export const AuthPage = () => {
 
             <div className="form-group">
                 <label htmlFor="password">Password:</label>
-                <input name="password" onKeyPress={(e)=>{if(e.key==="Enter"){loginHandler()}}} onChange={changeHandler} type="password" className="form-control" id="password" placeholder="От 6 символов"/>
+                <input name="password" onKeyPress={(e)=>{if(e.key==="Enter"){dispatch(reduxLogin(form))}}} onChange={changeHandler} type="password" className="form-control" id="password" placeholder="От 6 символов"/>
             </div>
             <div className="auth-buttons">
-                <button  onClick={loginHandler} className="btn btn-primary mybtn">Войти</button>
+                <button  onClick={()=>{dispatch(reduxLogin(form))}} className="btn btn-primary mybtn">Войти</button>
                 <button  onClick={()=>{history.push('/RegistrationPage')}} className="btn btn-success mybtn">Зарегистрироваться</button>
                 <button  onClick={sendMail} className="btn btn-warning mybtn">Забыл пароль</button>
             </div>

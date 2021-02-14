@@ -1,6 +1,6 @@
 import React from 'react'
 import { Switch, Route,Redirect } from 'react-router-dom'
-import { NotesPage } from './pages/NotesPage'
+import NotesPage from './pages/NotesPage'
 import { AuthPage } from './pages/AuthPage'
 import { CreateNote } from './pages/CreateNote'
 import { DetailPage } from './pages/DetailPage'

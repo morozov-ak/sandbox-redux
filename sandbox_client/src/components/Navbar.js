@@ -1,4 +1,6 @@
 import React, { useContext } from 'react'
+import {useDispatch} from 'react-redux'
+import { reduxLogout } from '../redux/actions.js'
 import { NavLink, useHistory } from 'react-router-dom'
 import { AuthContext } from '../context/AuthContext'
 //import {Nav} from 'react-bootstrap'
@@ -7,14 +9,15 @@ import { AuthContext } from '../context/AuthContext'
 export const Navbar = () => {
   const history = useHistory()
   const auth = useContext(AuthContext)
+  const dispatch = useDispatch()
 
 
 
-  const logoutHandler = event => {
-    event.preventDefault()
-    auth.logout()
-    history.push('/')
-  }
+  // const logoutHandler = event => {
+  //   event.preventDefault()
+  //   auth.logout()
+  //   history.push('/')
+  // }
 
   return (
     <nav className="navbar navbar-expand-md navbar-light bg-light">
@@ -38,7 +41,7 @@ export const Navbar = () => {
                   <NavLink to="/change_password" className="dropdown-item">Сменить пароль</NavLink>
                 
                 
-                <span className="dropdown-item" onClick={logoutHandler}>Выйти</span>
+                <span className="dropdown-item" onClick={()=>{dispatch(reduxLogout())}}>Выйти</span>
               </div>
           </li>
           {/* <div>
