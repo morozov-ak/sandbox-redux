@@ -1,23 +1,13 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import {useDispatch} from 'react-redux'
 import { reduxLogout } from '../redux/actions.js'
-import { NavLink, useHistory } from 'react-router-dom'
-import { AuthContext } from '../context/AuthContext'
+import { NavLink } from 'react-router-dom'
+import { connect } from 'react-redux'
 //import {Nav} from 'react-bootstrap'
 
 
-export const Navbar = () => {
-  const history = useHistory()
-  const auth = useContext(AuthContext)
+const Navbar = ({userName}) => {
   const dispatch = useDispatch()
-
-
-
-  // const logoutHandler = event => {
-  //   event.preventDefault()
-  //   auth.logout()
-  //   history.push('/')
-  // }
 
   return (
     <nav className="navbar navbar-expand-md navbar-light bg-light">
@@ -26,15 +16,13 @@ export const Navbar = () => {
         <span className="navbar-toggler-icon"></span>
       </button>
       <div className="collapse navbar-collapse" id="navbarNav">
-        <ul className="navbar-nav">
+        <ul className="navbar-nav mr-auto mt-2 mt-lg-0">
           <li className="nav-item"><NavLink to="/Notes" className="nav-link">Заметки</NavLink></li>
           <li className="nav-item"><NavLink to="/shared_notes" className="nav-link">Расшаренные заметки</NavLink></li>
-
           <li className="nav-item"><NavLink to="/Create" className="nav-link">Создать</NavLink></li>
-          {/* <li className="nav-link" onClick={logoutHandler}>Выйти</li> */}
           <li className="nav-item dropdown">
               <span className="nav-link dropdown-toggle"  id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                {auth.userName}
+                {userName}
               </span>
               <div className="dropdown-menu" aria-labelledby="navbarDropdown">
                 
@@ -44,19 +32,14 @@ export const Navbar = () => {
                 <span className="dropdown-item" onClick={()=>{dispatch(reduxLogout())}}>Выйти</span>
               </div>
           </li>
-          {/* <div>
-            <li className="nav-item">
-              <div className="nav-link" onClick={logoutHandler}>Выйти</div>
-            </li>
-          </div> */}
-
         </ul>
       </div>
     </nav>
-
-
-
   )
-
-
 }
+
+const mapStateToProps = state =>{
+  return {userName: state.auth.userName}
+}
+
+export default connect(mapStateToProps,null)(Navbar)

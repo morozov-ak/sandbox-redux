@@ -1,7 +1,9 @@
 import { AUTH_LOGIN,AUTH_LOGOUT } from "./types"
 
 const initialState={
-    
+    token:'',
+    userId:'',
+    userName:''
 }
 export const authReducer=(state = initialState,{type,payload})=>{
     switch(type){

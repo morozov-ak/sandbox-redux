@@ -3,6 +3,7 @@ import { AuthContext } from '../context/AuthContext'
 import { useHttp } from '../hooks/http.hook'
 import { useHistory } from 'react-router-dom'
 import { UsersShareList } from './UsersShareList'
+import { message } from '../utilites/message'
 
 
 
@@ -39,8 +40,8 @@ const NoteCard = ({ note, allUserList }) => {
   const createHandler = async () => {
     try {
       
+      message('Сохранено')
       
-      message2('Сохранено')
       let users = UsersListToSave
       console.log("users",users)
       

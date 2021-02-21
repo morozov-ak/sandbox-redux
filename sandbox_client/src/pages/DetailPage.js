@@ -20,7 +20,7 @@ export const DetailPage = () => {
       })
       setNote(fetched)
     } catch (e) { }
-  }, [token, noteId, request])
+  }, [])
 
   const getUsers = useCallback(async () => {
     try {
@@ -30,7 +30,7 @@ export const DetailPage = () => {
       
       setAllUserList(fetchedU)
     } catch (e) { }
-  }, [token,  request])
+  }, [])
 
 
 
@@ -39,7 +39,7 @@ export const DetailPage = () => {
     getNote()
     getUsers()
 
-  }, [getNote,getUsers])
+  }, [])
 
   if (loading) {
     return <Loader />

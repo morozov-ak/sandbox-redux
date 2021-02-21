@@ -2,10 +2,10 @@ import React from 'react'
 import { Switch, Route,Redirect } from 'react-router-dom'
 import NotesPage from './pages/NotesPage'
 import { AuthPage } from './pages/AuthPage'
-import { CreateNote } from './pages/CreateNote'
+import  CreateNote  from './pages/CreateNote'
 import { DetailPage } from './pages/DetailPage'
 import { RegistrationPage } from './pages/RegistrationPage'
-import { SharedNotesPage } from './pages/SharedNotesPage'
+import SharedNotesPage from './pages/SharedNotesPage'
 import { ChangePassword } from './pages/ChangePassword'
 
 export const useRoutes = isAuthenticated =>{

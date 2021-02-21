@@ -1,43 +1,33 @@
-import React, {useCallback, useContext, useEffect, useState} from 'react'
-import {useHttp} from '../hooks/http.hook'
-import {AuthContext} from '../context/AuthContext'
+import React, { useEffect } from 'react'
+
 import {Loader} from '../components/Loader'
-import NotesList from '../components/NotesList'
+import {NotesList} from '../components/NotesList'
+import {useDispatch} from 'react-redux'
+import { findSharedNotes } from '../redux/actions'
+import { connect } from 'react-redux'
 
-export const SharedNotesPage = () => {
-    const [notes, setnewNote] = useState([])
-    const {loading, request} = useHttp()
-    const {token} = useContext(AuthContext)
+const SharedNotesPage = ({sharedNotes,token,loading}) => {
+    const dispatch = useDispatch()
     
-    const fetchNotes = useCallback(async () => {
-        try {
-            
-          const fetched = await request('/api/note/shared_notes', 'GET', null, { Authorization: `Bearer ${token}` })
-          
-          //const fetched = await fetch('/api/note/notes', { method:'GET' })
-          //const data = await fetched.json()
-          
-          setnewNote(fetched)
-        } catch (e) {}
-      }, [token, request])
+    useEffect(() => {
+      dispatch(findSharedNotes(token))
+    }, [])
     
-      useEffect(() => {
-        fetchNotes()
-      }, [fetchNotes])
+    if (loading) {
+      return <Loader/>  
+    }
 
-      if (loading) {
-        return <Loader/>  
-      }
-
-      
-      
     return(
         <div>
-            <h1>Заметки </h1>
-            <NotesList notes={notes} className='table' />
+            <h1>Расшаренные заметки </h1>
+            <NotesList notes={sharedNotes} className='table' />
         </div>
-        
-      
-    
     )
+
 }
+
+const mapStateToProps = state =>{
+  return {token: state.auth.token,sharedNotes: state.notes.sharedNotes,loading: state.app.loading}
+}
+
+export default connect(mapStateToProps,null)(SharedNotesPage)

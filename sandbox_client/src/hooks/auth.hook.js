@@ -39,7 +39,7 @@ export const useAuth = () => {
       dispatch({type:AUTH_LOGIN, payload: data})
     }
     setReady(true)
-  }, [login])
+  }, [login,dispatch])
 
 
   return { login, logout, token, userId, ready,userName }

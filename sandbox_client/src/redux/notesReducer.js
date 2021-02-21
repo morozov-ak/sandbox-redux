@@ -1,15 +1,17 @@
-import { FIND_NOTES } from "./types"
+import { FIND_NOTES,CLEAR_NOTES, FIND_SHARED_NOTES } from "./types"
 
 const initialState={
-    notes:[]
+    notes:[],
+    sharedNotes:[]
 }
 export const notesReducer=(state = initialState,{type,payload})=>{
     switch(type){
         case FIND_NOTES:
-            console.log("payload:", payload)
             return{...state, notes:[...payload]}
-        
-        
+        case CLEAR_NOTES:
+            return{...state, notes:[]}
+        case FIND_SHARED_NOTES:
+            return{...state, sharedNotes:[...payload]}
         default: return state
     }
     

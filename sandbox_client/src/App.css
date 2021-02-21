@@ -1,6 +1,7 @@
 body {
   overflow-y: scroll;
 }
+
 .App {
   text-align: center;
 }
@@ -16,11 +17,9 @@ body {
   }
 }
 
-.form-check{
+.form-check {
   margin: 0px 10px;
 }
-
-
 
 .App-header {
   background-color: #282c34;
@@ -37,9 +36,7 @@ body {
   color: #61dafb;
 }
 
-
-
-.SiteLogoName{
+.SiteLogoName {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   text-align: center;
   font-weight: 500;
@@ -48,7 +45,7 @@ body {
   line-height: 0.7;
 }
 
-.RegistrationLogoName{
+.RegistrationLogoName {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-weight: 500;
   font-size: 75px;
@@ -56,169 +53,144 @@ body {
   line-height: 0.7;
 }
 
-.rel{
-  
+.rel {
   display: flex;
   align-items: center;
   justify-content: center;
   height: 100vh;
-  /* min-height: 390px; */
-  
-  
 }
 
-.container{
-  /* max-width: 80%; */
+.container {
   height: 100vp;
   border-color: maroon;
   border-width: 5px;
   padding: 0px;
-  /* background-color: gray; */
 }
 
-.auth{
-  /* position: absolute;
-  left: 50%;
-  margin-top: auto;
-  margin-bottom: 50%;
-  transform:  translate(-50%); */
-  
+.auth {
   justify-content: center;
   width: 400px;
-  
 }
 
-table{
+table {
   table-layout: fixed;
-  border: 1px solid gray;
-  /* max-width: 60px; */
-  width: 100%; /* Ширина таблицы в процентах */
- }
- .r {
-  border: 1px solid gray;
- }
+  width: 100%;
+}
 
- tr {
-  border: 1px solid gray;
- }
+.table td {
+  border-top: none;
+}
 
- td.col1 {
+tr {
+  border: 1px solid gray;
+}
+
+td.col1 {
   vertical-align: middle;
   width: 30px;
-  
- }
- td.col2 {
+}
+
+td.col2 {
   vertical-align: middle;
   min-width: 200px;
   overflow: hidden;
- }
- td.col3 {
+}
+
+td.col3 {
   overflow: hidden;
- }
- td.col4 {
+}
+
+td.col4 {
   vertical-align: middle;
   text-align: center;
-  width: 130px; 
+  width: 130px;
   overflow: hidden;
- }
- td.col5 {
+}
+
+td.col5 {
   width: 110px;
   overflow: hidden;
- }
- 
+}
 
-.auth-buttons{
+.auth-buttons {
   display: flex;
   justify-content: space-between;
 }
 
-.mybtn{
-
-  margin-top: 10px ;
-  
+.mybtn {
+  margin-top: 10px;
 }
+
 @media screen and (max-width:450px) {
-    .mybtn{
-      font-size: 15px;
-      margin-right: 5px;
-    }
-    .mybtn:last-child{
-      margin-right: 0px;
-    }
-    .auth{
-      width: 100%;
-      margin:25px;
-    }
-    .SiteLogoName{
-      font-size: 20vw;
-    }
-    .auth-buttons{
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: start; 
-    }
-
-    
-
+  .mybtn {
+    font-size: 15px;
+    margin-right: 5px;
   }
-
-
-.foot_btn{
-  margin: 5px 0px 0px ;
+  .mybtn:last-child {
+    margin-right: 0px;
+  }
+  .auth {
+    width: 100%;
+    margin: 25px;
+  }
+  .SiteLogoName {
+    font-size: 20vw;
+  }
+  .auth-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: start;
+  }
 }
 
-tr.tbody:hover{
-  background-color: lightslategray  ;
-} 
+.foot_btn {
+  margin: 5px 0px 0px;
+}
 
-#popup_container{
+tr.tbody:hover {
+  background-color: lightslategray;
+}
+
+#popup_container {
   position: absolute;
-  right: 0px; 
-  top: 0px; 
+  right: 0px;
+  top: 0px;
 }
 
-
-
- /* The snackbar - position it at the bottom and in the middle of the screen */
 #snackbar {
-  /* visibility: hidden; Hidden by default. Visible on click */
-  width: 250px; /* Set a default minimum width */
-  margin-left: -125px; /* Divide value of min-width by 2 */
-  background-color: #333; /* Black background color */
-  color: #fff; /* White text color */
-  text-align: center; /* Centered text */
-  border-radius: 4px; /* Rounded borders */
-  padding: 10px; /* Padding */
+  width: 250px;
+  margin-left: -125px;
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  border-radius: 4px;
+  padding: 10px;
   display: block;
-  position: relative; 
-  z-index: 1; 
+  position: relative;
+  z-index: 1;
   margin: 10px;
   overflow: hidden;
-  
-   /* -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s; */
-  animation: fadein 0.5s, fadeout 0.5s 2.5s; ;
-  /* animation: fadein 0.5s, fadeout 0.5s 2.5s;  */
+  animation: fadein 0.5s, fadeout 0.5s 2.5s;
 }
-
-
-
- /*Animations to fade the snackbar in and out */
-/* @-webkit-keyframes fadein {
-  from {right: 0; opacity: 0;}
-  to {right: 30px; opacity: 1;}
-} */
 
 @keyframes fadein {
-  from {right: -30px; opacity: 0;}
-  to {right: 0px; opacity: 1;}
+  from {
+    right: -30px;
+    opacity: 0;
+  }
+  to {
+    right: 0px;
+    opacity: 1;
+  }
 }
 
-/* @-webkit-keyframes fadeout {
-  from {top: 30px; opacity: 1;}
-  to {top: 0; opacity: 0;}
-} */
-
 @keyframes fadeout {
-  from {top: 0px; opacity: 1;}
-  to {top: -30px; opacity: 0;}
-} 
+  from {
+    top: 0px;
+    opacity: 1;
+  }
+  to {
+    top: -30px;
+    opacity: 0;
+  }
+}

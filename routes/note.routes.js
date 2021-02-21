@@ -24,19 +24,13 @@ router.post('/create', auth, async (req, res) => {
     }
 })
 
-
-
-
-
 router.post('/save', auth, async (req, res) => {
     try {
         console.log("saving")
         let doc = await Note.findOneAndUpdate({ _id: req.body.noteNameId }, { name: req.body.noteNameEdit, notetext: req.body.noteTextEdit, shared: [...req.body.users] });
         const noteToEdit = await Note.findById(req.body.noteNameId)
-        console.log("saved:", noteToEdit)
         res.json(noteToEdit)
     } catch (err) {
-        console.log("err",err)
         res.status(500).json({ err })
     }
 })
@@ -57,8 +51,6 @@ router.post('/deleteNote', auth, async (req, res) => {
     }
 })
 
-
-
 router.get('/notes', auth, async (req, res) => {
     try {
         const notes = await Note.find({ owner: req.user.userId })
@@ -77,27 +69,15 @@ router.get('/shared_notes', auth, async (req, res) => {
     }
 })
 
-
-
-
-
-
 router.get('/users', auth, async (req, res) => {
     try {
-        console.log(req.user.userId)
-        
         const users = await User.find({})
-        
-        console.log(_.findIndex(users, {id:req.user.userId}))
         users.splice(_.findIndex(users, (user)=>{return user._id==req.user.userId}),1)
-        //console.log(users)
         res.json(users)
     } catch (e) {
         res.status(500).json({ message: "Что-то пошло не так" })
     }
 })
-
-
 
 router.get('/:id', async (req, res) => {
     try {
@@ -126,18 +106,13 @@ router.post('/change_password',
         }
         const{oldPass,pass,ConfirmPass}=req.body
         if(pass!==ConfirmPass){ return res.status(400).json({message:"Пароли не совпадают"})}
-        console.log('change_password')
-        console.log(req.user)
         const userToChange = await User.findById(req.user.userId)
-        console.log(userToChange)
         const isMatch = await bcrypt.compare(oldPass, userToChange.password)
         if (!isMatch){
             return res.status(400).json({message: 'Старый пароль неправильный!'})
         }
         const hashedPassword =await bcrypt.hash(pass,12)
         let usr = await User.findOneAndUpdate({_id:req.user.userId}, {password:hashedPassword});
-        
-        
         res.status(200).json({message:"Пароль успешно изменён"})
 
     } catch (e) {

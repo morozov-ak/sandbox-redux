@@ -36,7 +36,6 @@ router.post(
         const hashedPassword =await bcrypt.hash(password,12)
         const user = new User({email, password:hashedPassword, name})
         await user.save()
-        console.log("Омагад! Новый юзер!",name)
         
         res.status(201).json({message:'Пользователь стоздан!'})
 
@@ -55,7 +54,6 @@ router.post(
     ],
     async(req, res)=>{
     try{
-        console.log("/login",req.body)
         const errors=validationResult(req)
         
             if(!errors.isEmpty()){
@@ -106,20 +104,18 @@ router.post('/send',
             })
         }
         const{email,password}=req.body
-        console.log(email)
+        
         const user = await User.findOne({email})
         //console.log(user)
         if(!user){
             return res.status(400).json({message:'User not found'})
         }
-        console.log("user1",user)
+        
         const generatedPassword =passGen(6,false)
         let generatedPasswordHashed =await bcrypt.hash(generatedPassword,12)
-        console.log(generatedPassword)
-        console.log(generatedPasswordHashed)
-        console.log("user2",user)
+        
         let usr = await User.findOneAndUpdate({_id:user._id}, {password:generatedPasswordHashed});
-        console.log("usr",usr)
+        
 
         
         let mail={
@@ -130,9 +126,9 @@ router.post('/send',
             //html: "<b>Новый пароль: {generatedPassword}</b>", // html body
 
         }
-        console.log('send2')
+        
         mailer(mail)
-        console.log('send3')
+        
         res.status(200).json({message:"Пароль отправлен на почту"})
 
     } catch (e) {

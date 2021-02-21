@@ -1,37 +1,25 @@
-import React, { useState, useContext } from 'react'
+import React, { useState } from 'react'
 import {useDispatch} from 'react-redux'
 import { reduxLogin } from '../redux/actions.js'
 import {useHistory} from 'react-router-dom'
 import { useHttp } from '../hooks/http.hook'
-import {AuthContext} from '../context/AuthContext'
 import { message } from '../utilites/message.js'
 
 
 
 export const AuthPage = () => {
     const history=useHistory()
-    const auth = useContext(AuthContext)
+    //const auth = useContext(AuthContext)
     const dispatch = useDispatch()
     const {request} = useHttp()
     const[form,setForm]=useState({
         email:'',password:'',name:''
     })
-    
+
 
     const changeHandler = event=>{
         setForm({...form, [event.target.name]:event.target.value})
     }
-
-
-
-    // const loginHandler = async () => {
-    //     try{
-    //         const data = await request('/api/auth/login','POST',{...form})
-    //         if(data.message){message(data.message)}
-    //         auth.login(data.token, data.userId,data.userName)
-    //     }
-    //     catch(e){}
-    // }
 
     const switchToPass = async () => {
         const input = document.getElementById('password');
