@@ -4,41 +4,35 @@ import { useHttp } from '../hooks/http.hook'
 import { AuthContext } from '../context/AuthContext'
 import { Loader } from '../components/Loader'
 import  NoteCard  from '../components/NoteCard'
+import {useDispatch} from 'react-redux'
+import { connect } from 'react-redux'
+import { findUsers,getEditingNote,cleanEditingNote } from '../redux/actions'
 
-export const DetailPage = () => {
-  const { token } = useContext(AuthContext)
-  const { request, loading } = useHttp()
-  const [note, setNote] = useState(null)
-  const [allUserList, setAllUserList] = useState(null)
+const DetailPage = ({token,allUserList,note,loading}) => {
+  //const { token } = useContext(AuthContext)
+  //const { request/*, loading*/ } = useHttp()
+  //const [note, setNote] = useState(null)
+  //const [allUserList, setAllUserList] = useState(null)
   const noteId = useParams().id
+  const dispatch = useDispatch()
 
 
-  const getNote = useCallback(async () => {
-    try {
-      const fetched = await request(`/api/note/${noteId}`, 'GET', null, {
-        Authorization: `Bearer ${token}`
-      })
-      setNote(fetched)
-    } catch (e) { }
-  }, [])
-
-  const getUsers = useCallback(async () => {
-    try {
-      const fetchedU = await request(`/api/note/users`, 'GET', null, {
-        Authorization: `Bearer ${token}`
-      })
-      
-      setAllUserList(fetchedU)
-    } catch (e) { }
-  }, [])
-
-
+  // const getNote = useCallback(async () => {
+  //   try {
+  //     const fetched = await request(`/api/note/${noteId}`, 'GET', null, {
+  //       Authorization: `Bearer ${token}`
+  //     })
+  //     console.log(fetched)
+  //     setNote(fetched)
+  //   } catch (e) { }
+  // }, [])
 
 
   useEffect(() => {
-    getNote()
-    getUsers()
-
+    //getNote()
+    dispatch(getEditingNote({token, noteId}))
+    dispatch(findUsers(token))
+    return function cleanup() {console.log("Уборка");dispatch(cleanEditingNote())  }
   }, [])
 
   if (loading) {
@@ -47,7 +41,13 @@ export const DetailPage = () => {
 
   return (
     <>
-      {!loading && note && <NoteCard note={note} allUserList={allUserList} />}
+      {/* {!loading && note && <NoteCard note={note} allUserList={allUserList} token={token} />} */}
+      {<NoteCard/>}
     </>
   )
 }
+const mapStateToProps = state => {
+  return { token: state.auth.token, allUserList: state.notes.users, note:state.notes.note,loading:state.app.loading }
+}
+
+export default connect(mapStateToProps, null)(DetailPage)

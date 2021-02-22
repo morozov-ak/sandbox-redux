@@ -2,28 +2,18 @@ import React, { useContext } from 'react'
 import { AuthContext } from '../context/AuthContext'
 import { useHttp } from '../hooks/http.hook'
 //import {Loader} from '../components/Loader'
+import {useDispatch} from 'react-redux'
 
 import { useHistory } from 'react-router-dom'
+import { deleteNote } from '../redux/actions'
 
 export const Modal = ({ note }) => {
   const { request } = useHttp()
   const { message2 } = useContext(AuthContext)
   const history = useHistory()
   const auth = useContext(AuthContext)
+  const dispatch = useDispatch()
 
-  const DeleteHandler = async (id, event) => {
-    try {
-      await request('/api/note/deleteNote', 'POST', { noteNameId: id }, {
-        authorization: `Bearer ${auth.token}`
-      })
-      message2("Удалено")
-
-
-    }
-    catch (err) { console.log(err) }
-    history.push(`/Create`)
-    history.push(`/Notes`)
-  }
 
   return (
     <>
@@ -46,7 +36,7 @@ export const Modal = ({ note }) => {
             </div>
             <div className="modal-footer">
               <button onClick={(event) => { event.stopPropagation() }} type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button onClick={(event) => { event.stopPropagation(); DeleteHandler(note._id) }} type="button" data-dismiss="modal" className="btn btn-danger">Удалить</button>
+              <button onClick={(event) => { event.stopPropagation(); dispatch(deleteNote({id:note._id,token:auth.token})) }} type="button" data-dismiss="modal" className="btn btn-danger">Удалить</button>
             </div>
           </div>
         </div>

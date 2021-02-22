@@ -18,26 +18,14 @@ const CreateNote = ({token,loadingg}) => {
         setnewNote({ ...newNote, [event.target.name]: event.target.value })
     }
 
-    // const createHandler = async () => {
-    //     try {
-    //         dispatch(loading())
-    //         await request('/api/note/create', 'POST', { ...newNote }, {
-    //             authorization: `Bearer ${auth.token}`
-    //         })
-    //         message(`Создана новая заметка: ${newNote.name} `, newNote)
-    //         setnewNote({ name: '', notetext: '' })
-    //         dispatch(loaded())
 
-    //     }
-    //     catch (e) { }
-    // }
     const createHandler = async () => {
         try {
             dispatch(createNote({newNote,token}))
             message(`Создана новая заметка: ${newNote.name} `, newNote)
             setnewNote({ name: '', notetext: '' })
         }
-        catch (e) {message(`АШИПКА!!!`) }
+        catch (e) {message(`Ошибка`) }
     }
 
     return (

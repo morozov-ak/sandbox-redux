@@ -30,7 +30,7 @@ export const UsersShareList = ({ allUserList = [], noteEdit, UsersListToSave, se
     }
 
 
-    if (allUserList) {
+    if (allUserList&&UsersListToSave) {
 
         return (
 

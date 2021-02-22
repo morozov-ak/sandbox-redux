@@ -1,5 +1,6 @@
 import { useState, useCallback, useEffect } from 'react'
 import {useDispatch} from 'react-redux'
+import { findNotes, loaded, checkAuth } from '../redux/actions';
 import {AUTH_LOGIN} from "../redux/types";
 
 const storageName = 'userData'
@@ -36,11 +37,12 @@ export const useAuth = () => {
     const data = JSON.parse(localStorage.getItem(storageName))
 
     if (data && data.token) {
+      dispatch(checkAuth(data.token))
       dispatch({type:AUTH_LOGIN, payload: data})
     }
     setReady(true)
   }, [login,dispatch])
 
 
-  return { login, logout, token, userId, ready,userName }
+  return { login, logout, token, userId, ready, userName }
 }

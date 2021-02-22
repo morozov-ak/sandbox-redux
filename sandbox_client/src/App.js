@@ -7,12 +7,24 @@ import { connect } from 'react-redux'
 import 'bootstrap'
 import { useAuth } from './hooks/auth.hook';
 import { AuthContext } from './context/AuthContext';
+import { Loader } from './components/Loader';
 
 
 function App({token}) {
-  const {login,logout,message2,setUsersList,Create,userId, UsersListToSave,setUsersListToSave,users,getUsers,userName}=useAuth()
+  const {login,logout,message2,ready,setUsersList,Create,userId, UsersListToSave,setUsersListToSave,users,getUsers,userName}=useAuth()
   const isAuthenticated = !!token
   const routes = useRoutes(isAuthenticated)
+
+  if (!ready) {
+    return <Loader />
+  }
+  // if (true) {
+  //   return <Loader />
+  // }
+  
+
+  
+
   return (
     <AuthContext.Provider value={{
       token, login, logout, message2,setUsersList,Create, userId, isAuthenticated, UsersListToSave,setUsersListToSave,users,getUsers,userName

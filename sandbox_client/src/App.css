@@ -71,6 +71,12 @@ body {
   justify-content: center;
   width: 400px;
 }
+.my_spinner{
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
 table {
   table-layout: fixed;
@@ -83,6 +89,15 @@ table {
 
 tr {
   border: 1px solid gray;
+
+}
+
+.note_header:hover {
+  background-color: lightslategray;
+}
+
+thead{
+  border-bottom: 2px solid gray;
 }
 
 td.col1 {
@@ -98,6 +113,7 @@ td.col2 {
 
 td.col3 {
   overflow: hidden;
+  border-bottom: 2px solid gray;
 }
 
 td.col4 {
@@ -139,7 +155,7 @@ td.col5 {
   .auth-buttons {
     display: flex;
     flex-wrap: wrap;
-    justify-content: start;
+    justify-content: flex-start;
   }
 }
 
@@ -147,9 +163,7 @@ td.col5 {
   margin: 5px 0px 0px;
 }
 
-tr.tbody:hover {
-  background-color: lightslategray;
-}
+
 
 #popup_container {
   position: absolute;

@@ -1,40 +1,48 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext,useEffect } from 'react'
 import { AuthContext } from '../context/AuthContext'
 import { useHttp } from '../hooks/http.hook'
 import { useHistory } from 'react-router-dom'
 import { UsersShareList } from './UsersShareList'
 import { message } from '../utilites/message'
+import {useDispatch} from 'react-redux'
+import { deleteNote } from '../redux/actions'
+import { connect } from 'react-redux'
+import { Loader } from '../components/Loader'
 
-
-
-const NoteCard = ({ note, allUserList }) => {
+const NoteCard = ({ note, allUserList,token,loading }) => {
   const history = useHistory()
-  const { loading, request } = useHttp()
+  const {  request } = useHttp()
   const { message2 } = useContext(AuthContext)
   const auth = useContext(AuthContext)
   //const {getUsers} = useContext(AuthContext)
   const [UsersListToSave, setUsersListToSave] = useState([])
+  const dispatch = useDispatch()
   
+  useEffect(() => {
+    setNoteEdit({noteNameId: note._id, noteNameEdit: note.name, noteTextEdit: note.notetext,shared:note.shared})
+    
+},[note])
+
+
   const [noteEdit, setNoteEdit] = useState({
     noteNameId: note._id, noteNameEdit: note.name, noteTextEdit: note.notetext,shared:note.shared
   })
 
-  const DeleteHandler = async () => {
-    try {
-      await request('/api/note/deleteNote', 'POST', { ...noteEdit }, {
-        authorization: `Bearer ${auth.token}`
-      })
-      message2(`Удалено: ${noteEdit.noteNameEdit}`)
-      history.goBack()
-    }
-    catch (err) { console.log(err) }
-  }
+  // const DeleteHandler = async () => {
+  //   try {
+  //     await request('/api/note/deleteNote', 'POST', { ...noteEdit }, {
+  //       authorization: `Bearer ${auth.token}`
+  //     })
+  //     message2(`Удалено: ${noteEdit.noteNameEdit}`)
+  //     history.goBack()
+  //   }
+  //   catch (err) { console.log(err) }
+  // }
 
   const changeHandler = event => {
+    //console.log("Ахтунг:",note)
     setNoteEdit({ ...noteEdit, [event.target.name]: event.target.value })
   }
-
-
 
 
   const createHandler = async () => {
@@ -54,20 +62,22 @@ const NoteCard = ({ note, allUserList }) => {
     catch (err) { console.log(err) }
   }
   //console.log("Юзеры переданные:",usersToShare)
+  // if (loading) {
+  //   let btn = document.getElementById('button-save')
+  //   btn.className = "btn btn-danger"
+  //   btn.disabled = 'false'
+
+  // }
+  // if (!loading) {
+  //   if (document.getElementById('button-save')) {
+  //     let btn = document.getElementById('button-save')
+  //     btn.className = "btn btn-success"
+  //     btn.removeAttribute("disabled")
+  //   }
+  // }
   if (loading) {
-    let btn = document.getElementById('button-save')
-    btn.className = "btn btn-danger"
-    btn.disabled = 'false'
-
+    return <Loader/>  
   }
-  if (!loading) {
-    if (document.getElementById('button-save')) {
-      let btn = document.getElementById('button-save')
-      btn.className = "btn btn-success"
-      btn.removeAttribute("disabled")
-    }
-  }
-
 
   return (
     <>
@@ -77,7 +87,7 @@ const NoteCard = ({ note, allUserList }) => {
           <button onClick={createHandler} className="btn btn-success" type="button" id="button-save" >Сохранить</button>
         </div>
       </div>
-
+      
       <p>Дата создания: <strong>{new Date(note.date).toLocaleDateString()}</strong></p>
 
       <textarea onChange={changeHandler} value={noteEdit.noteTextEdit} name="noteTextEdit" id="noteTextEdit" className="form-control" aria-label="With textarea"></textarea>
@@ -89,7 +99,7 @@ const NoteCard = ({ note, allUserList }) => {
           Расшарить заметку
         </button>
         <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-          <UsersShareList allUserList={allUserList} noteEdit={noteEdit} UsersListToSave={UsersListToSave} setUsersListToSave={setUsersListToSave} />
+          <UsersShareList allUserList={allUserList} noteEdit={note} UsersListToSave={UsersListToSave} setUsersListToSave={setUsersListToSave} />
         </div>
       </div>
 
@@ -112,7 +122,8 @@ const NoteCard = ({ note, allUserList }) => {
       </div>
             <div className="modal-footer">
               <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button onClick={DeleteHandler} type="button" data-dismiss="modal" className="btn btn-danger">Удалить</button>
+              {/* <button onClick={DeleteHandler} type="button" data-dismiss="modal" className="btn btn-danger">Удалить</button> */}
+              <button onClick={()=>{dispatch(deleteNote({id:note._id,token}))}} type="button" data-dismiss="modal" className="btn btn-danger">Удалить</button>
             </div>
           </div>
         </div>
@@ -122,4 +133,9 @@ const NoteCard = ({ note, allUserList }) => {
     </>
   )
 }
-export default React.memo(NoteCard)
+
+const mapStateToProps = state => {
+  return {  token: state.auth.token, allUserList: state.notes.users, note:state.notes.note,loading:state.app.loading  }
+}
+
+export default connect(mapStateToProps, null)(NoteCard)

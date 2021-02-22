@@ -24,7 +24,7 @@ export const NotesList = ( {notes} ) => {
             return (
               <React.Fragment key={note._id}>
 
-                <tr  className='tbody'
+                <tr  className='note_header'
                   onClick={() => { history.push(`/detail/${note._id}`) }}
                 >
                   <td className='col1'>{index + 1}</td>
