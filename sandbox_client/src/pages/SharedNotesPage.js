@@ -11,7 +11,7 @@ const SharedNotesPage = ({sharedNotes,token,loading}) => {
     
     useEffect(() => {
       dispatch(findSharedNotes(token))
-    }, [])
+    }, [token,dispatch])
     
     if (loading) {
       return <Loader/>  

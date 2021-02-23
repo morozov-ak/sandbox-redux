@@ -73,7 +73,8 @@ router.get('/users', auth, async (req, res) => {
     try {
         const users = await User.find({})
         users.splice(_.findIndex(users, (user)=>{return user._id==req.user.userId}),1)
-        res.json(users)
+        const trimmed = users.map(user=>{return {_id:user._id, name:user.name }})
+        res.json(trimmed)
     } catch (e) {
         res.status(500).json({ message: "Что-то пошло не так" })
     }
@@ -105,15 +106,17 @@ router.post('/change_password',
             })
         }
         const{oldPass,pass,ConfirmPass}=req.body
-        if(pass!==ConfirmPass){ return res.status(400).json({message:"Пароли не совпадают"})}
+        //if(pass!==ConfirmPass){ return res.status(400).json({message:"Пароли не совпадают"})}
+        if(pass!==ConfirmPass){ throw {error:"Пароли не совпадают"}}
         const userToChange = await User.findById(req.user.userId)
         const isMatch = await bcrypt.compare(oldPass, userToChange.password)
         if (!isMatch){
-            return res.status(400).json({message: 'Старый пароль неправильный!'})
+            throw {error:"Старый пароль неправильный!"}
         }
         const hashedPassword =await bcrypt.hash(pass,12)
         let usr = await User.findOneAndUpdate({_id:req.user.userId}, {password:hashedPassword});
-        res.status(200).json({message:"Пароль успешно изменён"})
+        console.log(usr)
+        res.status(200).json({message:"Пароль успешно изменён!"})
 
     } catch (e) {
         res.status(500).json(e)

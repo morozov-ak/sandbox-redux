@@ -1,19 +1,19 @@
-import React, { useState, useContext,useEffect } from 'react'
-import { AuthContext } from '../context/AuthContext'
-import { useHttp } from '../hooks/http.hook'
-import { useHistory } from 'react-router-dom'
+import React, { useState, useEffect } from 'react'
+//import { AuthContext } from '../context/AuthContext'
+//import { useHttp } from '../hooks/http.hook'
+//import { useHistory } from 'react-router-dom'
 import { UsersShareList } from './UsersShareList'
-import { message } from '../utilites/message'
+//import { message } from '../utilites/message'
 import {useDispatch} from 'react-redux'
-import { deleteNote } from '../redux/actions'
+import { saveNote, deleteNote } from '../redux/actions'
 import { connect } from 'react-redux'
-import { Loader } from '../components/Loader'
+//import { Loader } from '../components/Loader'
 
 const NoteCard = ({ note, allUserList,token,loading }) => {
-  const history = useHistory()
-  const {  request } = useHttp()
-  const { message2 } = useContext(AuthContext)
-  const auth = useContext(AuthContext)
+  //const history = useHistory()
+  //const {  request } = useHttp()
+  //const { message2 } = useContext(AuthContext)
+  //const auth = useContext(AuthContext)
   //const {getUsers} = useContext(AuthContext)
   const [UsersListToSave, setUsersListToSave] = useState([])
   const dispatch = useDispatch()
@@ -28,63 +28,40 @@ const NoteCard = ({ note, allUserList,token,loading }) => {
     noteNameId: note._id, noteNameEdit: note.name, noteTextEdit: note.notetext,shared:note.shared
   })
 
-  // const DeleteHandler = async () => {
-  //   try {
-  //     await request('/api/note/deleteNote', 'POST', { ...noteEdit }, {
-  //       authorization: `Bearer ${auth.token}`
-  //     })
-  //     message2(`Удалено: ${noteEdit.noteNameEdit}`)
-  //     history.goBack()
-  //   }
-  //   catch (err) { console.log(err) }
-  // }
-
   const changeHandler = event => {
-    //console.log("Ахтунг:",note)
     setNoteEdit({ ...noteEdit, [event.target.name]: event.target.value })
   }
 
 
   const createHandler = async () => {
-    try {
+    dispatch(saveNote({newNote:{ ...noteEdit, users:UsersListToSave },token}))
+    
+    // try {
       
-      message('Сохранено')
+    //   message('Сохранено')
       
-      let users = UsersListToSave
-      console.log("users",users)
+    //   let users = UsersListToSave
+    //   console.log("users",users)
       
 
-      note = await request('/api/note/save', 'POST', { ...noteEdit, users }, {
-        authorization: `Bearer ${auth.token}`
-      })
-      setNoteEdit({ ...noteEdit, shared: note.shared })
-      }
-    catch (err) { console.log(err) }
+    //   note = await request('/api/note/save', 'POST', { ...noteEdit, users }, {
+    //     authorization: `Bearer ${auth.token}`
+    //   })
+    //   setNoteEdit({ ...noteEdit, shared: note.shared })
+    //   }
+    // catch (err) { console.log(err) }
   }
-  //console.log("Юзеры переданные:",usersToShare)
+
   // if (loading) {
-  //   let btn = document.getElementById('button-save')
-  //   btn.className = "btn btn-danger"
-  //   btn.disabled = 'false'
-
+  //   return <Loader/>  
   // }
-  // if (!loading) {
-  //   if (document.getElementById('button-save')) {
-  //     let btn = document.getElementById('button-save')
-  //     btn.className = "btn btn-success"
-  //     btn.removeAttribute("disabled")
-  //   }
-  // }
-  if (loading) {
-    return <Loader/>  
-  }
 
   return (
     <>
       <div className="input-group mb-3">
         <input onChange={changeHandler} value={noteEdit.noteNameEdit} name="noteNameEdit" id="noteNameEdit" className="form-control" />
         <div className="input-group-append">
-          <button onClick={createHandler} className="btn btn-success" type="button" id="button-save" >Сохранить</button>
+          <button onClick={createHandler} className={loading ? "btn btn-danger":"btn btn-success"} type="button" id="button-save"  disabled={loading ? "disabled":""}>Сохранить</button>
         </div>
       </div>
       

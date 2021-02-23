@@ -1,16 +1,16 @@
 import React, { useContext } from 'react'
 import { AuthContext } from '../context/AuthContext'
-import { useHttp } from '../hooks/http.hook'
+//import { useHttp } from '../hooks/http.hook'
 //import {Loader} from '../components/Loader'
 import {useDispatch} from 'react-redux'
 
-import { useHistory } from 'react-router-dom'
+//import { useHistory } from 'react-router-dom'
 import { deleteNote } from '../redux/actions'
 
 export const Modal = ({ note }) => {
-  const { request } = useHttp()
-  const { message2 } = useContext(AuthContext)
-  const history = useHistory()
+  //const { request } = useHttp()
+  //const { message2 } = useContext(AuthContext)
+  //const history = useHistory()
   const auth = useContext(AuthContext)
   const dispatch = useDispatch()
 

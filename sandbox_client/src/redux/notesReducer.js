@@ -1,4 +1,4 @@
-import { FIND_USERS,GET_EDITING_NOTE,CLEAN_EDITING_NOTE, FIND_NOTES,CLEAR_NOTES, FIND_SHARED_NOTES,DELETE_NOTE,CREATE_NOTE } from "./types"
+import { FIND_USERS,GET_EDITING_NOTE,SAVE_EDITING_NOTE,CLEAN_EDITING_NOTE, FIND_NOTES,CLEAR_NOTES, FIND_SHARED_NOTES,DELETE_NOTE,CREATE_NOTE } from "./types"
 
 const initialState={
     notes:[],
@@ -24,6 +24,8 @@ export const notesReducer=(state = initialState,{type,payload})=>{
         case CLEAN_EDITING_NOTE:
             return{...state, note:[]}
         case CREATE_NOTE:
+            return state
+        case SAVE_EDITING_NOTE:
             return state
             
         default: return state

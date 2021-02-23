@@ -50,7 +50,7 @@ router.post(
     '/login', 
     [
         check('email','Input correct email').normalizeEmail().isEmail(),
-        check('password','Input password').exists().isLength({min:1})
+        check('password','Input password').exists().isLength({min:6})
     ],
     async(req, res)=>{
     try{
@@ -58,20 +58,23 @@ router.post(
         
             if(!errors.isEmpty()){
                 //console.log("ошибки", errors)
-                return res.status(400).json({
-                    errors: errors.array(),
-                    message:'Incorrect login data'
-                })
+                throw {error:'Incorrect login data'}
+                // return res.status(400).json({
+                //     errors: errors.array(),
+                //     message:'Incorrect login data'
+                // })
             }
             
         const{email,password}=req.body
         
         const user = await User.findOne({email})
         if(!user){
+            throw {error:'User not found'}
             return res.status(400).json({message:'User not found'})
         }
         const isMatch = await bcrypt.compare(password, user.password)
         if (!isMatch){
+            throw {error:'Incorrect pass'}
             return res.status(400).json({message: 'Incorrect pass'})
         }
         const token = jwt.sign(
@@ -84,8 +87,8 @@ router.post(
         //console.log(token,userId)  
         
 
-    }catch(e){
-        res.status(500).json({message:"Что-то пошло не так"})
+    }catch(error){
+        res.status(500).json(error)
     }
 })
 

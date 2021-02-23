@@ -1,7 +1,7 @@
 import { useState, useCallback, useEffect } from 'react'
-import {useDispatch} from 'react-redux'
-import { findNotes, loaded, checkAuth } from '../redux/actions';
-import {AUTH_LOGIN} from "../redux/types";
+import { useDispatch } from 'react-redux'
+import { checkAuth } from '../redux/actions';
+import { AUTH_LOGIN } from "../redux/types";
 
 const storageName = 'userData'
 

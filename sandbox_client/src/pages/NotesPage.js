@@ -12,7 +12,7 @@ const NotesPage = ({notes,token,loading}) => {
     useEffect(() => {
         dispatch(findNotes(token))
         
-      }, [])
+      }, [token,dispatch])
 
       if (loading) {
         return <Loader/>  

@@ -6,7 +6,7 @@ import  CreateNote  from './pages/CreateNote'
 import DetailPage from './pages/DetailPage'
 import { RegistrationPage } from './pages/RegistrationPage'
 import SharedNotesPage from './pages/SharedNotesPage'
-import { ChangePassword } from './pages/ChangePassword'
+import ChangePassword from './pages/ChangePassword'
 
 export const useRoutes = isAuthenticated =>{
     if (isAuthenticated){

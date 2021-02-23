@@ -1,9 +1,12 @@
 import React from 'react'
 import { Modal } from '../components/Modal'
 import { useHistory } from 'react-router-dom'
+import {useDispatch} from 'react-redux'
+import { getEditingNote } from '../redux/actions'
 
 export const NotesList = ( {notes} ) => {
   const history = useHistory()
+  const dispatch = useDispatch()
   if (!notes.length) {
     return <p className="center">Ссылок пока нет</p>
   }
@@ -25,7 +28,7 @@ export const NotesList = ( {notes} ) => {
               <React.Fragment key={note._id}>
 
                 <tr  className='note_header'
-                  onClick={() => { history.push(`/detail/${note._id}`) }}
+                  onClick={() => { history.push(`/detail/${note._id}`); dispatch(getEditingNote({note})) }}
                 >
                   <td className='col1'>{index + 1}</td>
                   <td className='col2'>{note.name}</td>

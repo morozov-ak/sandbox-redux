@@ -1,8 +1,8 @@
-import React, { useCallback, useContext, useEffect, useState } from 'react'
+import React, {  useEffect } from 'react'
 import { useParams } from 'react-router-dom'
-import { useHttp } from '../hooks/http.hook'
-import { AuthContext } from '../context/AuthContext'
-import { Loader } from '../components/Loader'
+// import { useHttp } from '../hooks/http.hook'
+// import { AuthContext } from '../context/AuthContext'
+// import { Loader } from '../components/Loader'
 import  NoteCard  from '../components/NoteCard'
 import {useDispatch} from 'react-redux'
 import { connect } from 'react-redux'
@@ -33,11 +33,11 @@ const DetailPage = ({token,allUserList,note,loading}) => {
     dispatch(getEditingNote({token, noteId}))
     dispatch(findUsers(token))
     return function cleanup() {console.log("Уборка");dispatch(cleanEditingNote())  }
-  }, [])
+  }, [token,dispatch,noteId])
 
-  if (loading) {
-    return <Loader />
-  }
+  // if (loading) {
+  //   return <Loader />
+  // }
 
   return (
     <>

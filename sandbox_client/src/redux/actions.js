@@ -1,4 +1,4 @@
-import { FIND_USERS, AUTH_LOGIN, AUTH_LOGOUT,CLEAN_EDITING_NOTE,GET_EDITING_NOTE, FIND_NOTES, CLEAR_NOTES, APP_LOADING, APP_LOADED, FIND_SHARED_NOTES, CREATE_NOTE, DELETE_NOTE, AUTH_CHECK } from "./types";
+import { FIND_USERS, AUTH_LOGIN, AUTH_LOGOUT,SAVE_EDITING_NOTE,AUTH_CHANGE_PASSWORD,CLEAN_EDITING_NOTE,GET_EDITING_NOTE, FIND_NOTES, CLEAR_NOTES, APP_LOADING, APP_LOADED, FIND_SHARED_NOTES, CREATE_NOTE, DELETE_NOTE, AUTH_CHECK } from "./types";
 import { useHttp } from "../hooks/http.hook"
 import { message } from "../utilites/message";
 
@@ -18,15 +18,19 @@ export function findUsers(token) {
         
     }
 }
-export function getEditingNote({token, noteId}) {
+export function getEditingNote({token, noteId,note}) {
     return async dispatch => {
         try {
             dispatch(loading())
-            const fetchedU = await request(`/api/note/${noteId}`, 'GET', null, {
-                Authorization: `Bearer ${token}`
-            })
-            console.log(fetchedU)
-            dispatch({ type: GET_EDITING_NOTE, payload: fetchedU })
+            if(note){console.log("коротко");dispatch({ type: GET_EDITING_NOTE, payload: note })}
+            else{
+                const fetchedU = await request(`/api/note/${noteId}`, 'GET', null, {
+                    Authorization: `Bearer ${token}`
+                })
+                console.log(fetchedU)
+                dispatch({ type: GET_EDITING_NOTE, payload: fetchedU })
+            }
+            
             dispatch(loaded())
         } catch (e) { dispatch(loaded())}
         
@@ -45,11 +49,31 @@ export function reduxLogin(form) {
         try {
             const data = await request('/api/auth/login', 'POST', { ...form })
             dispatch({ type: AUTH_LOGIN, payload: data })
+            if(data.error){throw data}
             localStorage.setItem(storageName, JSON.stringify(data))
+
             message(`Добро пожаловать, ${data.userName}!`)
         }
+        catch (error) {
+            message(error.error)
+        }
+
+    }
+}
+
+export function changePassword({form, token}) {
+    return async dispatch => {
+        try {
+            const data = await request('/api/note/change_password','POST',{...form},{
+                authorization: `Bearer ${token}`
+            })
+            if(data.error){throw data}
+            dispatch({ type: AUTH_CHANGE_PASSWORD})
+            localStorage.setItem(storageName, JSON.stringify(data))
+            message(data.message)
+        }
         catch (e) {
-            message(e)
+            message(e.error)
         }
 
     }
@@ -100,6 +124,7 @@ export function checkAuth(token) {
 export function createNote({ newNote, token }) {
     return async dispatch => {
         try {
+            console.log("DNN:",newNote)
             dispatch(loading())
             await request('/api/note/create', 'POST', { ...newNote }, {
                 authorization: `Bearer ${token}`
@@ -111,6 +136,24 @@ export function createNote({ newNote, token }) {
         catch (e) { }
     }
 }
+
+export function saveNote({ newNote, token }) {
+    return async dispatch => {
+        try {
+            console.log("DNN:",newNote)
+            dispatch(loading())
+            await request('/api/note/save', 'POST', { ...newNote }, {
+                authorization: `Bearer ${token}`
+            })
+            dispatch({ type: SAVE_EDITING_NOTE })
+            dispatch(loaded())
+
+        }
+        catch (e) { }
+    }
+}
+
+
 export function editNote({ newNote, token }) {
     return async dispatch => {
         try {

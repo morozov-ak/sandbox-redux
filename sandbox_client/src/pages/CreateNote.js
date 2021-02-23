@@ -1,15 +1,15 @@
-import React, { useState, useContext, useEffect } from 'react'
-import { AuthContext } from '../context/AuthContext'
+import React, { useState } from 'react'
+//import { AuthContext } from '../context/AuthContext'
 import {useDispatch} from 'react-redux'
-import { useHttp } from '../hooks/http.hook'
+//import { useHttp } from '../hooks/http.hook'
 import { message } from '../utilites/message'
 import { connect } from 'react-redux'
-import { loading, loaded, createNote } from '../redux/actions.js'
+import { createNote } from '../redux/actions.js'
 
 const CreateNote = ({token,loadingg}) => {
-    const { request } = useHttp()
+    //const { request } = useHttp()
     const dispatch = useDispatch()
-    const auth = useContext(AuthContext)
+    //const auth = useContext(AuthContext)
     const [newNote, setnewNote] = useState({
         name: '', notetext: ''
     })
@@ -34,7 +34,7 @@ const CreateNote = ({token,loadingg}) => {
             <div className="input-group mb-3">
                 <input onChange={changeHandler} value={newNote.name} name="name" id="name" type="text" placeholder="Заголовок заметки" className="form-control" aria-label="Amount (to the nearest dollar)" />
                 <div className="input-group-append">
-                    <button onClick={createHandler} className={loadingg ? "btn btn-danger":"btn btn-success"} type="button" id="button-save">Сохранить</button>
+                    <button onClick={createHandler} className={loadingg ? "btn btn-danger":"btn btn-success"} type="button" id="button-save" disabled={loadingg ? "disabled":""}>Сохранить</button>
                 </div>
             </div>
             <div className="input-group">
