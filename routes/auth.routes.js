@@ -70,20 +70,21 @@ router.post(
         const user = await User.findOne({email})
         if(!user){
             throw {error:'User not found'}
-            return res.status(400).json({message:'User not found'})
         }
+        
         const isMatch = await bcrypt.compare(password, user.password)
         if (!isMatch){
             throw {error:'Incorrect pass'}
             return res.status(400).json({message: 'Incorrect pass'})
         }
         const token = jwt.sign(
-            {userId:user.id},
+            {userId:user.id,admin:user.admin},
             config.get('jwtSecret'),
             {expiresIn:'1h'}
 
+
         )
-        return res.json({token,userId:user.id,userName:user.name})
+        return res.json({token,userId:user.id,userName:user.name, admin:user.admin})
         //console.log(token,userId)  
         
 
@@ -98,7 +99,7 @@ router.post('/send',
     ],  
     async (req, res) => {
     try {
-        console.log('send')
+        //console.log('send')
         const errors=validationResult(req)
         if(!errors.isEmpty()){
             return res.status(400).json({

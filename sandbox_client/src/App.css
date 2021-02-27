@@ -119,8 +119,9 @@ td.col3 {
 td.col4 {
   vertical-align: middle;
   text-align: center;
-  width: 130px;
+  width: 180px;
   overflow: hidden;
+  text-align: left;
 }
 
 td.col5 {

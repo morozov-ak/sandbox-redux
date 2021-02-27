@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 //import { AuthContext } from '../context/AuthContext'
 //import { useHttp } from '../hooks/http.hook'
-//import { useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import { UsersShareList } from './UsersShareList'
 //import { message } from '../utilites/message'
 import {useDispatch} from 'react-redux'
@@ -10,7 +10,7 @@ import { connect } from 'react-redux'
 //import { Loader } from '../components/Loader'
 
 const NoteCard = ({ note, allUserList,token,loading }) => {
-  //const history = useHistory()
+  const history = useHistory()
   //const {  request } = useHttp()
   //const { message2 } = useContext(AuthContext)
   //const auth = useContext(AuthContext)
@@ -20,6 +20,8 @@ const NoteCard = ({ note, allUserList,token,loading }) => {
   
   useEffect(() => {
     setNoteEdit({noteNameId: note._id, noteNameEdit: note.name, noteTextEdit: note.notetext,shared:note.shared})
+    console.log(note)
+    if(note.length===0){console.log("BAZINGA");history.push(`/Notes`)}
     
 },[note])
 
@@ -58,6 +60,7 @@ const NoteCard = ({ note, allUserList,token,loading }) => {
 
   return (
     <>
+      <h1>Редактирование заметки</h1>
       <div className="input-group mb-3">
         <input onChange={changeHandler} value={noteEdit.noteNameEdit} name="noteNameEdit" id="noteNameEdit" className="form-control" />
         <div className="input-group-append">

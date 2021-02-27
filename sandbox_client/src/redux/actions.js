@@ -1,4 +1,4 @@
-import { FIND_USERS, AUTH_LOGIN, AUTH_LOGOUT,SAVE_EDITING_NOTE,AUTH_CHANGE_PASSWORD,CLEAN_EDITING_NOTE,GET_EDITING_NOTE, FIND_NOTES, CLEAR_NOTES, APP_LOADING, APP_LOADED, FIND_SHARED_NOTES, CREATE_NOTE, DELETE_NOTE, AUTH_CHECK } from "./types";
+import { FIND_USERS, AUTH_LOGIN, AUTH_LOGOUT, ADMIN_FIND_NOTES, SAVE_EDITING_NOTE, AUTH_CHANGE_PASSWORD, CLEAN_EDITING_NOTE, GET_EDITING_NOTE, FIND_NOTES, CLEAR_NOTES, APP_LOADING, APP_LOADED, FIND_SHARED_NOTES, CREATE_NOTE, DELETE_NOTE, AUTH_CHECK } from "./types";
 import { useHttp } from "../hooks/http.hook"
 import { message } from "../utilites/message";
 
@@ -12,8 +12,31 @@ export function findUsers(token) {
             const fetchedU = await request(`/api/note/users`, 'GET', null, {
                 Authorization: `Bearer ${token}`
             })
-
             dispatch({ type: FIND_USERS, payload: fetchedU })
+        } catch (e) { }
+        
+    }
+}
+export function findAdminUsers(token) {
+    return async dispatch => {
+        try {
+            const fetchedU = await request(`/api/note/adminUsers`, 'GET', null, {
+                Authorization: `Bearer ${token}`
+            })
+            dispatch({ type: FIND_USERS, payload: fetchedU })
+        } catch (e) { }
+        
+    }
+}
+export function findAdminNotes({token,userId}) {
+    return async dispatch => {
+        try {
+            console.log("action search?",token,userId)
+            const fetchedU = await request(`/api/note/adminNotes/${userId}`, 'GET', null, {
+                Authorization: `Bearer ${token}`
+            })
+            console.log("Заметки для админа",fetchedU)
+            dispatch({ type: ADMIN_FIND_NOTES, payload: fetchedU })
         } catch (e) { }
         
     }
@@ -48,6 +71,7 @@ export function reduxLogin(form) {
     return async dispatch => {
         try {
             const data = await request('/api/auth/login', 'POST', { ...form })
+            console.log(data)
             dispatch({ type: AUTH_LOGIN, payload: data })
             if(data.error){throw data}
             localStorage.setItem(storageName, JSON.stringify(data))

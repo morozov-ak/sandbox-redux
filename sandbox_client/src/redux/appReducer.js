@@ -1,7 +1,7 @@
 import { APP_LOADING, APP_LOADED } from "./types"
 
 const initialState={
-    loading:true
+    loading:false
 }
 export const appReducer=(state = initialState,{type,payload})=>{
     switch(type){

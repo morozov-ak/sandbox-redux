@@ -6,7 +6,7 @@ import { connect } from 'react-redux'
 //import {Nav} from 'react-bootstrap'
 
 
-const Navbar = ({userName}) => {
+const Navbar = ({userName, admin}) => {
   const dispatch = useDispatch()
 
   return (
@@ -20,15 +20,13 @@ const Navbar = ({userName}) => {
           <li className="nav-item"><NavLink to="/Notes" className="nav-link">Заметки</NavLink></li>
           <li className="nav-item"><NavLink to="/shared_notes" className="nav-link">Расшаренные заметки</NavLink></li>
           <li className="nav-item"><NavLink to="/Create" className="nav-link">Создать</NavLink></li>
+          {admin?<li className="nav-item"><NavLink to="/AdminTools" className="nav-link">Администрирование</NavLink></li> : ""}
           <li className="nav-item dropdown">
               <span className="nav-link dropdown-toggle"  id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 {userName}
               </span>
               <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                
-                  <NavLink to="/change_password" className="dropdown-item">Сменить пароль</NavLink>
-                
-                
+                <NavLink to="/change_password" className="dropdown-item">Сменить пароль</NavLink>
                 <span className="dropdown-item" onClick={()=>{dispatch(reduxLogout())}}>Выйти</span>
               </div>
           </li>
@@ -39,7 +37,7 @@ const Navbar = ({userName}) => {
 }
 
 const mapStateToProps = state =>{
-  return {userName: state.auth.userName}
+  return {userName: state.auth.userName,admin: state.auth.admin}
 }
 
 export default connect(mapStateToProps,null)(Navbar)

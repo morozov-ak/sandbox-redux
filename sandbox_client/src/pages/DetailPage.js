@@ -30,9 +30,9 @@ const DetailPage = ({token,allUserList,note,loading}) => {
 
   useEffect(() => {
     //getNote()
-    dispatch(getEditingNote({token, noteId}))
+    //dispatch(getEditingNote({token, noteId}))
     dispatch(findUsers(token))
-    return function cleanup() {console.log("Уборка");dispatch(cleanEditingNote())  }
+    return function cleanup() {dispatch(cleanEditingNote())  }
   }, [token,dispatch,noteId])
 
   // if (loading) {

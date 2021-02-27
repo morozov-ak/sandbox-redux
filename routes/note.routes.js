@@ -26,7 +26,7 @@ router.post('/create', auth, async (req, res) => {
 
 router.post('/save', auth, async (req, res) => {
     try {
-        console.log("saving")
+        //console.log("saving")
         let doc = await Note.findOneAndUpdate({ _id: req.body.noteNameId }, { name: req.body.noteNameEdit, notetext: req.body.noteTextEdit, shared: [...req.body.users] });
         const noteToEdit = await Note.findById(req.body.noteNameId)
         res.json(noteToEdit)
@@ -79,6 +79,29 @@ router.get('/users', auth, async (req, res) => {
         res.status(500).json({ message: "Что-то пошло не так" })
     }
 })
+router.get('/adminUsers', auth, async (req, res) => {
+    try {
+        const users = await User.find({})
+        users.splice(_.findIndex(users, (user)=>{return user._id==req.user.userId}),1)
+        res.json(users)
+    } catch (e) {
+        res.status(500).json({ message: "Что-то пошло не так" })
+    }
+})
+router.get('/adminNotes/:id', auth, async (req, res) => {
+    try {
+        const token = req.headers.authorization.split(' ')[1]
+        if(req.user.admin){
+            const notes = await Note.find({ owner:req.params.id })
+            //console.log(notes)
+            res.json(notes)
+        }
+        
+        //res.json(users)
+    } catch (e) {
+        res.status(500).json({ message: "Что-то пошло не так" })
+    }
+})
 
 router.get('/:id', async (req, res) => {
     try {
@@ -115,7 +138,7 @@ router.post('/change_password',
         }
         const hashedPassword =await bcrypt.hash(pass,12)
         let usr = await User.findOneAndUpdate({_id:req.user.userId}, {password:hashedPassword});
-        console.log(usr)
+        //console.log(usr)
         res.status(200).json({message:"Пароль успешно изменён!"})
 
     } catch (e) {
