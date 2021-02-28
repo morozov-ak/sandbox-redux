@@ -20,10 +20,10 @@ const NoteCard = ({ note, allUserList,token,loading }) => {
   
   useEffect(() => {
     setNoteEdit({noteNameId: note._id, noteNameEdit: note.name, noteTextEdit: note.notetext,shared:note.shared})
-    console.log(note)
+    //console.log(note)
     if(note.length===0){console.log("BAZINGA");history.push(`/Notes`)}
     
-},[note])
+},[note,history])
 
 
   const [noteEdit, setNoteEdit] = useState({
@@ -43,7 +43,7 @@ const NoteCard = ({ note, allUserList,token,loading }) => {
     //   message('Сохранено')
       
     //   let users = UsersListToSave
-    //   console.log("users",users)
+    //   //console.log("users",users)
       
 
     //   note = await request('/api/note/save', 'POST', { ...noteEdit, users }, {
@@ -51,7 +51,7 @@ const NoteCard = ({ note, allUserList,token,loading }) => {
     //   })
     //   setNoteEdit({ ...noteEdit, shared: note.shared })
     //   }
-    // catch (err) { console.log(err) }
+    // catch (err) { //console.log(err) }
   }
 
   // if (loading) {

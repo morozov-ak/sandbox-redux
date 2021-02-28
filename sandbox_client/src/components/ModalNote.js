@@ -1,20 +1,15 @@
-import React, { useContext } from 'react'
-import { AuthContext } from '../context/AuthContext'
-//import { useHttp } from '../hooks/http.hook'
-//import {Loader} from '../components/Loader'
+import React from 'react'
 import {useDispatch} from 'react-redux'
 
-//import { useHistory } from 'react-router-dom'
-import { deleteNote } from '../redux/actions'
+import { deleteNote } from '../redux/actions.js'
 
-export const Modal = ({ note }) => {
-  //const { request } = useHttp()
-  //const { message2 } = useContext(AuthContext)
-  //const history = useHistory()
-  const auth = useContext(AuthContext)
+
+
+
+const ModalNote = ({ note }) => {
+
+  
   const dispatch = useDispatch()
-
-
   return (
     <>
       <button onClick={(event) => { event.stopPropagation() }} type="button" className="btn btn-danger" data-toggle="modal" data-target={`#f${note._id}`}>
@@ -36,7 +31,7 @@ export const Modal = ({ note }) => {
             </div>
             <div className="modal-footer">
               <button onClick={(event) => { event.stopPropagation() }} type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button onClick={(event) => { event.stopPropagation(); dispatch(deleteNote({id:note._id,token:auth.token})) }} type="button" data-dismiss="modal" className="btn btn-danger">Удалить</button>
+              <button onClick={(event) => { event.stopPropagation(); dispatch(deleteNote(note._id, note.owner)) }} type="button" data-dismiss="modal" className="btn btn-danger">Удалить</button>
             </div>
           </div>
         </div>
@@ -44,3 +39,9 @@ export const Modal = ({ note }) => {
     </>
   )
 }
+
+const mapStateToProps = state => {
+  return { token: state.auth.token }
+}
+
+export default connect(mapStateToProps, null)(ModalNote)

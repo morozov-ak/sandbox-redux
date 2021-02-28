@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { Loader } from '../components/Loader'
-import { AdminUsers } from '../components/AdminUsers'
+//import { AdminUsers } from '../components/AdminUsers'
 import {NotesList }from '../components/NotesList'
 import { findAdminNotes } from '../redux/actions.js'
 import { useDispatch } from 'react-redux'
@@ -14,7 +14,7 @@ const AllNotesOf = ({ token, adminedNotes, loading }) => {
     useEffect(() => {
         dispatch(findAdminNotes({token,userId}))
 
-    }, [token, dispatch])
+    }, [token, dispatch,userId])
 
     if (loading) {
         return <Loader />

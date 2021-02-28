@@ -5,7 +5,7 @@ import { findAdminUsers } from '../redux/actions.js'
 import { useDispatch } from 'react-redux'
 import { connect } from 'react-redux'
 
-const AdminTools = ({ users, token, loading }) => {
+const AdminTools = ({ adminedUsers, token, loading }) => {
 
     const dispatch = useDispatch()
 
@@ -21,13 +21,13 @@ const AdminTools = ({ users, token, loading }) => {
     return (
         <div>
             <h1>Список пользователей</h1>
-            <AdminUsers users={users} className='table' />
+            <AdminUsers users={adminedUsers} className='table' />
         </div>
     )
 }
 
 const mapStateToProps = state => {
-    return { token: state.auth.token, users: state.notes.users, loading: state.app.loading }
+    return { token: state.auth.token, adminedUsers: state.notes.adminedUsers, loading: state.app.loading }
 }
 
 export default connect(mapStateToProps, null)(AdminTools)

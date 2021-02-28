@@ -6,7 +6,7 @@ import { useParams } from 'react-router-dom'
 import  NoteCard  from '../components/NoteCard'
 import {useDispatch} from 'react-redux'
 import { connect } from 'react-redux'
-import { findUsers,getEditingNote,cleanEditingNote } from '../redux/actions'
+import { findUsers,cleanEditingNote } from '../redux/actions'
 
 const DetailPage = ({token,allUserList,note,loading}) => {
   //const { token } = useContext(AuthContext)
@@ -22,7 +22,7 @@ const DetailPage = ({token,allUserList,note,loading}) => {
   //     const fetched = await request(`/api/note/${noteId}`, 'GET', null, {
   //       Authorization: `Bearer ${token}`
   //     })
-  //     console.log(fetched)
+  //     //console.log(fetched)
   //     setNote(fetched)
   //   } catch (e) { }
   // }, [])

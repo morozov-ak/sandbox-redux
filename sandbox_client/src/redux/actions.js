@@ -1,4 +1,24 @@
-import { FIND_USERS, AUTH_LOGIN, AUTH_LOGOUT, ADMIN_FIND_NOTES, SAVE_EDITING_NOTE, AUTH_CHANGE_PASSWORD, CLEAN_EDITING_NOTE, GET_EDITING_NOTE, FIND_NOTES, CLEAR_NOTES, APP_LOADING, APP_LOADED, FIND_SHARED_NOTES, CREATE_NOTE, DELETE_NOTE, AUTH_CHECK } from "./types";
+import { 
+    FIND_USERS,
+    //AUTH_REGISTER,
+    //ADMIN_DELETE_NOTE, 
+    AUTH_LOGIN,
+    ADMIN_DELETE_USER, 
+    AUTH_LOGOUT,
+    ADMIN_FIND_USERS, 
+    ADMIN_FIND_NOTES, 
+    SAVE_EDITING_NOTE, 
+    AUTH_CHANGE_PASSWORD, 
+    CLEAN_EDITING_NOTE, 
+    GET_EDITING_NOTE, 
+    FIND_NOTES, 
+    CLEAR_NOTES, 
+    APP_LOADING, 
+    APP_LOADED, 
+    FIND_SHARED_NOTES, 
+    CREATE_NOTE, 
+    DELETE_NOTE, 
+    AUTH_CHECK } from "./types";
 import { useHttp } from "../hooks/http.hook"
 import { message } from "../utilites/message";
 
@@ -17,27 +37,55 @@ export function findUsers(token) {
         
     }
 }
+
 export function findAdminUsers(token) {
     return async dispatch => {
         try {
             const fetchedU = await request(`/api/note/adminUsers`, 'GET', null, {
                 Authorization: `Bearer ${token}`
             })
-            dispatch({ type: FIND_USERS, payload: fetchedU })
+            dispatch({ type: ADMIN_FIND_USERS, payload: fetchedU })
         } catch (e) { }
         
     }
 }
+
+export function adminDeleteUser({token,user}) {
+    return async dispatch => {
+        try {
+            //const fetched = 
+            await request(`/api/note/deleteUser/${user._id}`, 'DELETE', null, {
+                Authorization: `Bearer ${token}`
+            })
+            dispatch(findAdminUsers(token))
+            dispatch({ type: ADMIN_DELETE_USER})
+        } catch (e) { }
+        
+    }
+}
+export function adminDeleteNote({token,user}) {
+    return async dispatch => {
+        try {
+            await request(`/api/note/deleteNote/${user._id}`, 'DELETE', null, {
+                Authorization: `Bearer ${token}`
+            })
+            dispatch(findAdminUsers(token))
+            dispatch({ type: ADMIN_DELETE_USER})
+        } catch (e) { }
+        
+    }
+}
+
 export function findAdminNotes({token,userId}) {
     return async dispatch => {
         try {
-            console.log("action search?",token,userId)
+            dispatch(loading())
             const fetchedU = await request(`/api/note/adminNotes/${userId}`, 'GET', null, {
                 Authorization: `Bearer ${token}`
             })
-            console.log("Заметки для админа",fetchedU)
+            dispatch(loaded())
             dispatch({ type: ADMIN_FIND_NOTES, payload: fetchedU })
-        } catch (e) { }
+        } catch (e) {dispatch(loaded()) }
         
     }
 }
@@ -50,7 +98,6 @@ export function getEditingNote({token, noteId,note}) {
                 const fetchedU = await request(`/api/note/${noteId}`, 'GET', null, {
                     Authorization: `Bearer ${token}`
                 })
-                console.log(fetchedU)
                 dispatch({ type: GET_EDITING_NOTE, payload: fetchedU })
             }
             
@@ -71,17 +118,30 @@ export function reduxLogin(form) {
     return async dispatch => {
         try {
             const data = await request('/api/auth/login', 'POST', { ...form })
-            console.log(data)
             dispatch({ type: AUTH_LOGIN, payload: data })
             if(data.error){throw data}
             localStorage.setItem(storageName, JSON.stringify(data))
-
             message(`Добро пожаловать, ${data.userName}!`)
         }
         catch (error) {
             message(error.error)
         }
+    }
+}
 
+export function reduxRegister(form) {
+    return async dispatch => {
+        try {
+            const data = await request('/api/auth/register','POST',{...form})
+            dispatch({ type: AUTH_LOGIN, payload: data })
+            if(data.error){throw data}
+            localStorage.setItem(storageName, JSON.stringify(data))
+            message(`Добро пожаловать, ${data.userName}!`)
+            
+        }
+        catch (error) {
+            message(error.error)
+        }
     }
 }
 
@@ -122,7 +182,6 @@ export function findNotes(token) {
         }
         catch (error) {
             dispatch(loaded())
-            console.log("errorr", error)
             if (error.e && (error.e.message === "jwt expired")) { dispatch(reduxLogout()) }
             message(error.message)
         }
@@ -139,7 +198,6 @@ export function checkAuth(token) {
         }
         catch (error) {
             dispatch(loaded())
-            console.log("errorr", error)
             if (error.e && (error.e.message === "jwt expired")) { dispatch(reduxLogout()) }
         }
     }
@@ -148,7 +206,6 @@ export function checkAuth(token) {
 export function createNote({ newNote, token }) {
     return async dispatch => {
         try {
-            console.log("DNN:",newNote)
             dispatch(loading())
             await request('/api/note/create', 'POST', { ...newNote }, {
                 authorization: `Bearer ${token}`
@@ -164,7 +221,6 @@ export function createNote({ newNote, token }) {
 export function saveNote({ newNote, token }) {
     return async dispatch => {
         try {
-            console.log("DNN:",newNote)
             dispatch(loading())
             await request('/api/note/save', 'POST', { ...newNote }, {
                 authorization: `Bearer ${token}`
@@ -211,7 +267,6 @@ export function deleteNote({ id, token }) {
         }
         catch (error) {
             dispatch(loaded())
-            console.log("errorr", error)
             if (error.e && (error.e.message === "jwt expired")) { dispatch(reduxLogout()) }
             message(error.message)
         }

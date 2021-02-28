@@ -36,8 +36,13 @@ router.post(
         const hashedPassword =await bcrypt.hash(password,12)
         const user = new User({email, password:hashedPassword, name})
         await user.save()
-        
-        res.status(201).json({message:'Пользователь стоздан!'})
+        const token = jwt.sign(
+            {userId:user.id,admin:user.admin},
+            config.get('jwtSecret'),
+            {expiresIn:'1h'}
+        )
+        return res.json({token,userId:user.id,userName:user.name, admin:user.admin})
+        //res.status(201).json({message:'Пользователь стоздан!'})
 
     }catch(e){
         //console.log( `e^`,e)
@@ -81,8 +86,6 @@ router.post(
             {userId:user.id,admin:user.admin},
             config.get('jwtSecret'),
             {expiresIn:'1h'}
-
-
         )
         return res.json({token,userId:user.id,userName:user.name, admin:user.admin})
         //console.log(token,userId)  

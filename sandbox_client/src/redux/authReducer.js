@@ -1,4 +1,4 @@
-import { AUTH_LOGIN,AUTH_LOGOUT,AUTH_CHECK,AUTH_CHANGE_PASSWORD } from "./types"
+import { AUTH_LOGIN,AUTH_LOGOUT,AUTH_CHECK,AUTH_CHANGE_PASSWORD,AUTH_REGISTER } from "./types"
 
 const initialState={
     token:'',
@@ -10,6 +10,8 @@ export const authReducer=(state = initialState,{type,payload})=>{
     switch(type){
         case AUTH_LOGIN:
             return{...state, ...payload}
+        case AUTH_REGISTER:
+            return state
         case AUTH_LOGOUT:
             return{...state, token:'',userId:'',userName:'',admin:false}
         case AUTH_CHANGE_PASSWORD:

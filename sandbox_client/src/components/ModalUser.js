@@ -1,18 +1,15 @@
 import React from 'react'
 import {useDispatch} from 'react-redux'
-
-import {  deleteUser } from '../redux/actions.js'
-
-
+import {  adminDeleteUser } from '../redux/actions.js'
+import { connect } from 'react-redux'
 
 
-export const ModalUser = ({ user }) => {
 
-  
+const ModalUser = ({ user,token }) => {
   const dispatch = useDispatch()
   return (
     <>
-      <button onClick={(event) => { event.stopPropagation(); console.log(user._id) }} type="button" className="btn btn-danger" data-toggle="modal" data-target={`#f${user._id}`}>
+      <button onClick={(event) => { event.stopPropagation() }} type="button" className="btn btn-danger" data-toggle="modal" data-target={`#f${user._id}`}>
         Удалить
         </button>
 
@@ -31,7 +28,7 @@ export const ModalUser = ({ user }) => {
             </div>
             <div className="modal-footer">
               <button onClick={(event) => { event.stopPropagation() }} type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button onClick={(event) => {/* event.stopPropagation(); dispatch(deleteUser(user._id)) */}} type="button" data-dismiss="modal" className="btn btn-danger">Удалить</button>
+              <button onClick={(event) => {event.stopPropagation(); dispatch(adminDeleteUser({token,user})) }} type="button" data-dismiss="modal" className="btn btn-danger">Удалить</button>
             </div>
           </div>
         </div>
@@ -39,3 +36,9 @@ export const ModalUser = ({ user }) => {
     </>
   )
 }
+
+const mapStateToProps = state => {
+  return { token: state.auth.token }
+}
+
+export default connect(mapStateToProps, null)(ModalUser)
