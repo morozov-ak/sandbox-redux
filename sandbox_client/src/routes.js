@@ -17,19 +17,25 @@ export const useRoutes = isAuthenticated =>{
                 <Route path="/Notes" exact>
                     <NotesPage/>
                 </Route>
+                <Route path="/Notes/:id" exact>
+                    <DetailPage/>
+                </Route>
                 <Route path="/Create" exact>
                     <CreateNote/>
                 </Route>
                 <Route path="/shared_notes" exact>
                     <SharedNotesPage/>
                 </Route>
-                <Route path="/detail/:id">
-                    <DetailPage />
+                <Route path="/shared_notes/:id" exact>
+                    <DetailPage/>
                 </Route>
-                <Route path="/change_password">
+                {/* <Route path="/detail/:id">
+                    <DetailPage />
+                </Route> */}
+                <Route path="/change_password" exact>
                     <ChangePassword />
                 </Route>
-                <Route path="/AdminTools">
+                <Route path="/AdminTools" exact>
                     <AdminTools />
                 </Route>
                 <Route path="/AllNotesOf/:id">

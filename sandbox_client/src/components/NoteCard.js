@@ -9,7 +9,7 @@ import { saveNote, deleteNote } from '../redux/actions'
 import { connect } from 'react-redux'
 //import { Loader } from '../components/Loader'
 
-const NoteCard = ({ note, allUserList,token,loading }) => {
+const NoteCard = ({ note, allUserList,token,loading,userId }) => {
   const history = useHistory()
   //const {  request } = useHttp()
   //const { message2 } = useContext(AuthContext)
@@ -38,25 +38,17 @@ const NoteCard = ({ note, allUserList,token,loading }) => {
   const createHandler = async () => {
     dispatch(saveNote({newNote:{ ...noteEdit, users:UsersListToSave },token}))
     
-    // try {
-      
-    //   message('Сохранено')
-      
-    //   let users = UsersListToSave
-    //   //console.log("users",users)
-      
-
-    //   note = await request('/api/note/save', 'POST', { ...noteEdit, users }, {
-    //     authorization: `Bearer ${auth.token}`
-    //   })
-    //   setNoteEdit({ ...noteEdit, shared: note.shared })
-    //   }
-    // catch (err) { //console.log(err) }
+    
+  }
+  const deleteHandler = async () => {
+    dispatch(deleteNote({id:note._id,token}))
+    //.then((path)=>{history.push(`${path.route}`)})
+    .then((path)=>{history.goBack()})
+    
+    
   }
 
-  // if (loading) {
-  //   return <Loader/>  
-  // }
+
 
   return (
     <>
@@ -64,7 +56,13 @@ const NoteCard = ({ note, allUserList,token,loading }) => {
       <div className="input-group mb-3">
         <input onChange={changeHandler} value={noteEdit.noteNameEdit} name="noteNameEdit" id="noteNameEdit" className="form-control" />
         <div className="input-group-append">
-          <button onClick={createHandler} className={loading ? "btn btn-danger":"btn btn-success"} type="button" id="button-save"  disabled={loading ? "disabled":""}>Сохранить</button>
+          <button 
+          //disabled={note.owner===userId?"":"disabled"} 
+          onClick={createHandler} 
+          className={loading ? "btn btn-danger":"btn btn-success"} 
+          type="button" 
+          id="button-save"  
+          disabled={loading||note.owner!==userId ? "disabled":""}>Сохранить</button>
         </div>
       </div>
       
@@ -83,7 +81,7 @@ const NoteCard = ({ note, allUserList,token,loading }) => {
         </div>
       </div>
 
-      <button type="button" className="btn btn-danger foot_btn" data-toggle="modal" data-target="#exampleModal">
+      <button disabled={note.owner===userId?"":"disabled"} type="button" className="btn btn-danger foot_btn" data-toggle="modal" data-target="#exampleModal">
         Удалить
       </button>
 
@@ -103,7 +101,8 @@ const NoteCard = ({ note, allUserList,token,loading }) => {
             <div className="modal-footer">
               <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
               {/* <button onClick={DeleteHandler} type="button" data-dismiss="modal" className="btn btn-danger">Удалить</button> */}
-              <button onClick={()=>{dispatch(deleteNote({id:note._id,token}))}} type="button" data-dismiss="modal" className="btn btn-danger">Удалить</button>
+              {/* <button onClick={()=>{dispatch(deleteNote({id:note._id,token}))}} type="button" data-dismiss="modal" className="btn btn-danger">Удалить</button> */}
+              <button onClick={deleteHandler} type="button" data-dismiss="modal" className="btn btn-danger">Удалить</button>
             </div>
           </div>
         </div>
@@ -115,7 +114,13 @@ const NoteCard = ({ note, allUserList,token,loading }) => {
 }
 
 const mapStateToProps = state => {
-  return {  token: state.auth.token, allUserList: state.notes.users, note:state.notes.note,loading:state.app.loading  }
+  return {  
+    token: state.auth.token, 
+    allUserList: state.notes.users, 
+    note:state.notes.note,
+    loading:state.app.loading, 
+    userId: state.auth.userId
+    }
 }
 
-export default connect(mapStateToProps, null)(NoteCard)
+export default connect(mapStateToProps, null)(React.memo(NoteCard))

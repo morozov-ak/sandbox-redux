@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-//import {useHistory} from 'react-router-dom'
+import {useHistory} from 'react-router-dom'
 // import { useHttp } from '../hooks/http.hook'
 // import {AuthContext} from '../context/AuthContext'
 import { changePassword } from '../redux/actions.js'
@@ -7,7 +7,7 @@ import {useDispatch} from 'react-redux'
 import { connect } from 'react-redux'
 
 const ChangePassword = ({token}) => {
-    //const history=useHistory()
+    const history=useHistory()
     //const {message2} = useContext(AuthContext)
     //const auth = useContext(AuthContext)
     //const {request} = useHttp()
@@ -24,6 +24,8 @@ const ChangePassword = ({token}) => {
 
     const loginHandler = async () => {
         dispatch(changePassword({form,token}))
+        .then(route=>history.push('/'))
+        //history.push('/')
     //     try{
     //         const data = await request('/api/note/change_password','POST',{...form},{
     //             authorization: `Bearer ${token}`

@@ -6,7 +6,7 @@ import {useDispatch} from 'react-redux'
 import { findSharedNotes } from '../redux/actions'
 import { connect } from 'react-redux'
 
-const SharedNotesPage = ({sharedNotes,token,loading}) => {
+const SharedNotesPage = ({sharedNotes,token,loading,userId}) => {
     const dispatch = useDispatch()
     
     useEffect(() => {
@@ -20,14 +20,19 @@ const SharedNotesPage = ({sharedNotes,token,loading}) => {
     return(
         <div>
             <h1>Расшаренные заметки </h1>
-            <NotesList notes={sharedNotes} className='table' />
+            <NotesList notes={sharedNotes} userId={userId}  className='table' />
         </div>
     )
 
 }
 
 const mapStateToProps = state =>{
-  return {token: state.auth.token,sharedNotes: state.notes.sharedNotes,loading: state.app.loading}
+  return {
+    token: state.auth.token,
+    sharedNotes: state.notes.sharedNotes,
+    loading: state.app.loading, 
+    userId: state.auth.userId
+  }
 }
 
 export default connect(mapStateToProps,null)(SharedNotesPage)

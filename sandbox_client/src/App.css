@@ -93,7 +93,7 @@ tr {
 }
 
 .note_header:hover {
-  background-color: lightslategray;
+  background-color: rgba(119, 136, 153, 0.418);
 }
 
 thead{

@@ -31,7 +31,7 @@ const ModalNote = ({ note }) => {
             </div>
             <div className="modal-footer">
               <button onClick={(event) => { event.stopPropagation() }} type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button onClick={(event) => { event.stopPropagation(); dispatch(deleteNote(note._id, note.owner)) }} type="button" data-dismiss="modal" className="btn btn-danger">Удалить</button>
+              <button onClick={(event) => { event.stopPropagation(); dispatch(deleteNote(note._id, note.owner)).then((path)=>{history.push(`${path.route}`)}) }} type="button" data-dismiss="modal" className="btn btn-danger">Удалить</button>
             </div>
           </div>
         </div>

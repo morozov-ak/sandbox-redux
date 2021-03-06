@@ -49,4 +49,4 @@ const mapStateToProps = state => {
     return { token: state.auth.token,  loadingg: state.app.loading }
 }
 
-export default connect(mapStateToProps, null)(CreateNote)
+export default connect(mapStateToProps, null)(React.memo(CreateNote))

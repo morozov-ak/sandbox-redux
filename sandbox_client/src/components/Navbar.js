@@ -4,10 +4,12 @@ import { reduxLogout } from '../redux/actions.js'
 import { NavLink } from 'react-router-dom'
 import { connect } from 'react-redux'
 //import {Nav} from 'react-bootstrap'
+import { useHistory } from 'react-router-dom'
 
 
 const Navbar = ({userName, admin}) => {
   const dispatch = useDispatch()
+  const history = useHistory()
 
   return (
     <nav className="navbar navbar-expand-md navbar-light bg-light">
@@ -27,7 +29,7 @@ const Navbar = ({userName, admin}) => {
               </span>
               <div className="dropdown-menu" aria-labelledby="navbarDropdown">
                 <NavLink to="/change_password" className="dropdown-item">Сменить пароль</NavLink>
-                <span className="dropdown-item" onClick={()=>{dispatch(reduxLogout())}}>Выйти</span>
+                <span className="dropdown-item" onClick={()=>{dispatch(reduxLogout());history.push('/')}}>Выйти</span>
               </div>
           </li>
         </ul>

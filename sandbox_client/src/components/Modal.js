@@ -7,7 +7,7 @@ import {useDispatch} from 'react-redux'
 //import { useHistory } from 'react-router-dom'
 import { deleteNote } from '../redux/actions'
 
-export const Modal = ({ note }) => {
+export const Modal = ({ note,userId }) => {
   //const { request } = useHttp()
   //const { message2 } = useContext(AuthContext)
   //const history = useHistory()
@@ -17,9 +17,16 @@ export const Modal = ({ note }) => {
 
   return (
     <>
-      <button onClick={(event) => { event.stopPropagation() }} type="button" className="btn btn-danger" data-toggle="modal" data-target={`#f${note._id}`}>
+      <button 
+      onClick={(event) => { event.stopPropagation() }} 
+      disabled={note.owner===userId?"":"disabled"} 
+      type="button" 
+      className="btn btn-danger" 
+      data-toggle="modal" 
+      data-target={`#f${note._id}`}
+      >
         Удалить
-        </button>
+      </button>
 
 
       <div className="modal fade" id={`f${note._id}`} tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

@@ -122,6 +122,7 @@ export function reduxLogin(form) {
             if(data.error){throw data}
             localStorage.setItem(storageName, JSON.stringify(data))
             message(`Добро пожаловать, ${data.userName}!`)
+            return "роутинг"
         }
         catch (error) {
             message(error.error)
@@ -155,6 +156,7 @@ export function changePassword({form, token}) {
             dispatch({ type: AUTH_CHANGE_PASSWORD})
             localStorage.setItem(storageName, JSON.stringify(data))
             message(data.message)
+            return "/"
         }
         catch (e) {
             message(e.error)
@@ -227,6 +229,7 @@ export function saveNote({ newNote, token }) {
             })
             dispatch({ type: SAVE_EDITING_NOTE })
             dispatch(loaded())
+            message("Заметка сохранена")
 
         }
         catch (e) { }
@@ -262,7 +265,7 @@ export function deleteNote({ id, token }) {
             dispatch({ type: DELETE_NOTE, payload: fetched })
             dispatch(loaded())
             message("Удалено")
-
+            return {route:"Notes/"}
 
         }
         catch (error) {

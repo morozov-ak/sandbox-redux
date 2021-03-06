@@ -5,7 +5,7 @@ import { findNotes } from '../redux/actions.js'
 import {useDispatch} from 'react-redux'
 import { connect } from 'react-redux'
 
-const NotesPage = ({notes,token,loading}) => {
+const NotesPage = ({notes,token,loading,userId}) => {
     
     const dispatch = useDispatch()
     
@@ -21,13 +21,18 @@ const NotesPage = ({notes,token,loading}) => {
       return(
         <div>
             <h1>Заметки </h1>
-            <NotesList notes={notes}  className='table' />
+            <NotesList notes={notes} userId={userId}  className='table' />
         </div>
     )
 }
 
 const mapStateToProps = state =>{
-  return {token: state.auth.token,notes: state.notes.notes,loading: state.app.loading}
+  return {
+    token: state.auth.token,
+    notes: state.notes.notes,
+    loading: state.app.loading, 
+    userId: state.auth.userId
+  }
 }
 
 export default connect(mapStateToProps,null)(NotesPage)
