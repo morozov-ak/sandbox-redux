@@ -97,7 +97,7 @@ export const RegistrationPage = () => {
                 placeholder="От 6 символов"/>
             </div>
             <div className="auth-buttons">
-                <button type="submit" onClick={()=>{history.push('/')}} className="btn btn-primary mybtn">Войти</button>
+                <button type="submit" onClick={()=>{history.push('/')}} className="btn btn-primary mybtn">У меня уже есть пароль</button>
                 <button type="submit" onClick={()=>{dispatch(reduxRegister(form))}} className="btn btn-success mybtn">Зарегистрироваться</button>
             </div>
         </div>  

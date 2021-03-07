@@ -33,9 +33,8 @@ const CreateNote = ({token,loadingg}) => {
             <h1>Создать заметку</h1>
             <div className="input-group mb-3">
                 <input onChange={changeHandler} value={newNote.name} name="name" id="name" type="text" placeholder="Заголовок заметки" className="form-control" aria-label="Amount (to the nearest dollar)" />
-                <div className="input-group-append">
-                    <button onClick={createHandler} className={loadingg ? "btn btn-danger":"btn btn-success"} type="button" id="button-save" disabled={loadingg ? "disabled":""}>Сохранить</button>
-                </div>
+                <button onClick={createHandler} className={loadingg ? "btn btn-danger":"btn btn-success"} type="button" id="button-save" disabled={loadingg ? "disabled":""}>Сохранить</button>
+                
             </div>
             <div className="input-group">
                 <textarea onChange={changeHandler} value={newNote.notetext} name="notetext" id="notetext" className="form-control" aria-label="With textarea"></textarea>

@@ -19,10 +19,12 @@ import {
     CREATE_NOTE, 
     DELETE_NOTE, 
     AUTH_CHECK } from "./types";
-import { useHttp } from "../hooks/http.hook"
+
+import {request} from "../hooks/http.hook"
+//import { useHttp } from "../hooks/http.hook"
 import { message } from "../utilites/message";
 
-const { request } = useHttp()
+//const  request  = useHttp()
 const storageName = 'userData'
 
 
@@ -93,7 +95,7 @@ export function getEditingNote({token, noteId,note}) {
     return async dispatch => {
         try {
             dispatch(loading())
-            if(note){console.log("коротко");dispatch({ type: GET_EDITING_NOTE, payload: note })}
+            if(note){dispatch({ type: GET_EDITING_NOTE, payload: note })}
             else{
                 const fetchedU = await request(`/api/note/${noteId}`, 'GET', null, {
                     Authorization: `Bearer ${token}`
@@ -108,7 +110,6 @@ export function getEditingNote({token, noteId,note}) {
 }
 export function cleanEditingNote() {
     return async dispatch => {
-        
             dispatch({ type: CLEAN_EDITING_NOTE })
         
     }
@@ -122,7 +123,6 @@ export function reduxLogin(form) {
             if(data.error){throw data}
             localStorage.setItem(storageName, JSON.stringify(data))
             message(`Добро пожаловать, ${data.userName}!`)
-            return "роутинг"
         }
         catch (error) {
             message(error.error)
@@ -207,6 +207,7 @@ export function checkAuth(token) {
 
 export function createNote({ newNote, token }) {
     return async dispatch => {
+        console.log("whaaat?")
         try {
             dispatch(loading())
             await request('/api/note/create', 'POST', { ...newNote }, {
@@ -295,7 +296,6 @@ export function findSharedNotes(token) {
 
 export function clearNotes() {
     return async dispatch => {
-
         dispatch({ type: CLEAR_NOTES })
     }
 }

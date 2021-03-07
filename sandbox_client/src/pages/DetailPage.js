@@ -40,7 +40,7 @@ const DetailPage = ({token,allUserList,note,loading,userId}) => {
   //   return <Loader />
   // }
 
-  return(note.owner==userId?<NoteCard/>:<SharedNoteCard/>)
+  return(note.owner===userId?<NoteCard/>:<SharedNoteCard/>)
 
   // return (
   //   <>

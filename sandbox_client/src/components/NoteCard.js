@@ -20,8 +20,9 @@ const NoteCard = ({ note, allUserList,token,loading,userId }) => {
   
   useEffect(() => {
     setNoteEdit({noteNameId: note._id, noteNameEdit: note.name, noteTextEdit: note.notetext,shared:note.shared})
-    //console.log(note)
-    if(note.length===0){console.log("BAZINGA");history.push(`/Notes`)}
+    if(note.length===0){history.push(`/Notes`)}
+    
+
     
 },[note,history])
 
@@ -36,16 +37,14 @@ const NoteCard = ({ note, allUserList,token,loading,userId }) => {
 
 
   const createHandler = async () => {
+    console.log("save:",UsersListToSave)
     dispatch(saveNote({newNote:{ ...noteEdit, users:UsersListToSave },token}))
     
     
   }
   const deleteHandler = async () => {
     dispatch(deleteNote({id:note._id,token}))
-    //.then((path)=>{history.push(`${path.route}`)})
     .then((path)=>{history.goBack()})
-    
-    
   }
 
 
@@ -55,23 +54,21 @@ const NoteCard = ({ note, allUserList,token,loading,userId }) => {
       <h1>Редактирование заметки</h1>
       <div className="input-group mb-3">
         <input onChange={changeHandler} value={noteEdit.noteNameEdit} name="noteNameEdit" id="noteNameEdit" className="form-control" />
-        <div className="input-group-append">
+        
           <button 
-          //disabled={note.owner===userId?"":"disabled"} 
           onClick={createHandler} 
           className={loading ? "btn btn-danger":"btn btn-success"} 
           type="button" 
           id="button-save"  
-          disabled={loading||note.owner!==userId ? "disabled":""}>Сохранить</button>
-        </div>
+          disabled={loading||note.owner!==userId ? "disabled":""}>
+            Сохранить
+          </button>
       </div>
       
       <p>Дата создания: <strong>{new Date(note.date).toLocaleDateString()}</strong></p>
 
       <textarea onChange={changeHandler} value={noteEdit.noteTextEdit} name="noteTextEdit" id="noteTextEdit" className="form-control" aria-label="With textarea"></textarea>
     
-      
-      
       <div className="dropdown foot_btn">
         <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Расшарить заметку

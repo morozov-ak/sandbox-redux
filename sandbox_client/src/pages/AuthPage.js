@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import {useDispatch} from 'react-redux'
 import { reduxLogin } from '../redux/actions.js'
 import {useHistory} from 'react-router-dom'
-import { useHttp } from '../hooks/http.hook'
+import { request } from '../hooks/http.hook'
 import { message } from '../utilites/message.js'
 
 
@@ -11,7 +11,7 @@ export const AuthPage = () => {
     const history=useHistory()
     //const auth = useContext(AuthContext)
     const dispatch = useDispatch()
-    const {request} = useHttp()
+    ///const {request} = useHttp()
     const[form,setForm]=useState({
         email:'',password:'',name:''
     })
@@ -60,7 +60,7 @@ export const AuthPage = () => {
                 <input name="password" onKeyPress={(e)=>{if(e.key==="Enter"){dispatch(reduxLogin(form))}}} onChange={changeHandler} type="password" className="form-control" id="password" placeholder="От 6 символов"/>
             </div>
             <div className="auth-buttons">
-                <button  onClick={()=>{dispatch(reduxLogin(form)).then(value=>console.log(value))}} className="btn btn-primary mybtn">Войти</button>
+                <button  onClick={()=>{dispatch(reduxLogin(form))}} className="btn btn-primary mybtn">Войти</button>
                 <button  onClick={()=>{history.push('/RegistrationPage')}} className="btn btn-success mybtn">Зарегистрироваться</button>
                 <button  onClick={sendMail} className="btn btn-warning mybtn">Забыл пароль</button>
             </div>

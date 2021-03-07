@@ -34,9 +34,9 @@ export const Modal = ({ note,userId }) => {
           <div className="modal-content">
             <div className="modal-header">
               <h5 className="modal-title" id="exampleModalLabel">Modal title</h5>
-              <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
+              <button onClick={(event) => { event.stopPropagation() }} type="button" className="btn-close" data-dismiss="modal" aria-label="Close"/>
+                {/* <span aria-hidden="true">&times;</span>
+              </button> */}
             </div>
             <div className="modal-body">
               Удалить заметку: {note.name} ???

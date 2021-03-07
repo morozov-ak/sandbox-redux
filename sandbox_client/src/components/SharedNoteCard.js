@@ -1,28 +1,14 @@
 import React, { useState, useEffect } from 'react'
-//import { AuthContext } from '../context/AuthContext'
-//import { useHttp } from '../hooks/http.hook'
 import { useHistory } from 'react-router-dom'
-//import { UsersShareList } from './UsersShareList'
-//import { message } from '../utilites/message'
-import { useDispatch } from 'react-redux'
-//import { saveNote, deleteNote } from '../redux/actions'
 import { connect } from 'react-redux'
-//import { Loader } from '../components/Loader'
 
 const SharedNotesList = ({ note }) => {
     const history = useHistory()
-    //const {  request } = useHttp()
-    //const { message2 } = useContext(AuthContext)
-    //const auth = useContext(AuthContext)
-    //const {getUsers} = useContext(AuthContext)
-    const [UsersListToSave, setUsersListToSave] = useState([])
-    const dispatch = useDispatch()
-
+    
     useEffect(() => {
         setNoteEdit({ noteNameId: note._id, noteNameEdit: note.name, noteTextEdit: note.notetext, shared: note.shared })
         //console.log(note)
-        if (note.length === 0) { console.log("BAZINGA"); history.push(`/shared_notes`) }
-
+        if (note.length === 0) { history.push(`/Create`) }
     }, [note, history])
 
 
