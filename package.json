@@ -38,6 +38,8 @@
     "server": "nodemon app.js",
     "build": "react-scripts build",
     "client": "npm run start --prefix sandbox_client",
+    "client:install": "npm install --prefix sandbox_client",
+    "client:build": "npm run build --prefix sandbox_client",
     "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "eslintConfig": {

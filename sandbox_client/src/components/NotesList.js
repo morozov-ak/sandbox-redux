@@ -26,13 +26,6 @@ export const NotesList = ( {notes,userId} ) => {
           {notes.map((note, index) => {
             return (
               <React.Fragment key={note._id}>
-
-                {/* <tr  className='note_header'
-                  onClick={() => { history.push(`/detail/${note._id}`); dispatch(getEditingNote({note})) }}
-                > */}
-                {/* <tr  className='note_header'
-                  onClick={() => { history.push(`/Notes/${note._id}`); dispatch(getEditingNote({note})) }}
-                > */}
                 <tr  className='note_header'
                   onClick={() => { note.owner===userId?history.push(`/Notes/${note._id}`):history.push(`/shared_notes/${note._id}`); dispatch(getEditingNote({note})) }}
                 >

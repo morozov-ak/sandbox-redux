@@ -52,10 +52,7 @@ export const AuthPage = () => {
             <div className="form-group">
                 <label htmlFor="email">Email address:</label>
                 <input name="email" onKeyPress={(e)=>{if(e.key==="Enter"){switchToPass()}}} onChange={changeHandler} type="email" className="form-control" id="email" placeholder="email@example.com"/>
-            </div>
             
-
-            <div className="form-group">
                 <label htmlFor="password">Password:</label>
                 <input name="password" onKeyPress={(e)=>{if(e.key==="Enter"){dispatch(reduxLogin(form))}}} onChange={changeHandler} type="password" className="form-control" id="password" placeholder="От 6 символов"/>
             </div>

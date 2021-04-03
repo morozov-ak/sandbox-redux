@@ -4,14 +4,15 @@ import  UsersShareListItem  from './UserShareListItem'
 
 
 
-export const UsersShareList = ({ allUserList = [], noteEdit, UsersListToSave, setUsersListToSave }) => {
+// export 
+const UsersShareList = ({ allUserList = [], noteEdit, UsersListToSave, setUsersListToSaveCB }) => {
 
     
 
     useEffect(() => {
-        setUsersListToSave(noteEdit.shared)
+        setUsersListToSaveCB(noteEdit.shared)
         
-    },[noteEdit.shared, setUsersListToSave])
+    },[noteEdit.shared, setUsersListToSaveCB])
 
     // const checkHandler = async (event, user) => {
     //         event.persist()
@@ -36,7 +37,7 @@ export const UsersShareList = ({ allUserList = [], noteEdit, UsersListToSave, se
         return (
 
             allUserList.map((user) => {
-                return (<UsersShareListItem key={user._id} user={user} UsersListToSave={UsersListToSave} setUsersListToSave={setUsersListToSave} />)
+                return (<UsersShareListItem key={user._id} user={user} UsersListToSave={UsersListToSave} setUsersListToSaveCB={setUsersListToSaveCB} />)
             })
 
             // allUserList.map((user) => {
@@ -58,3 +59,5 @@ export const UsersShareList = ({ allUserList = [], noteEdit, UsersListToSave, se
 
 
 }
+
+export default React.memo(UsersShareList);

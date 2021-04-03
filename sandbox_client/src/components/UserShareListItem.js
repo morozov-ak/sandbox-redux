@@ -4,20 +4,20 @@ import React from 'react'
 
 
 //export 
-const UsersShareListItem = ({user, UsersListToSave, setUsersListToSave }) => {
+const UsersShareListItem = ({user, UsersListToSave, setUsersListToSaveCB }) => {
     
     
     const checkHandler = async (event, user) => {
             event.persist()
             if(event.target.checked===false){
-                setUsersListToSave((prev)=>{
+                setUsersListToSaveCB((prev)=>{
                     if(prev.indexOf(user._id)===-1){console.log("Повторный вызов");return prev}
                     prev.splice(prev.indexOf(user._id),1)
                     return [...prev]
                 })
             }
             else{
-                setUsersListToSave((prev)=>{
+                setUsersListToSaveCB((prev)=>{
                     if(prev.indexOf(user._id)!==-1){console.log("Повторный вызов");return prev}
                     return [...prev, user._id]
                 })

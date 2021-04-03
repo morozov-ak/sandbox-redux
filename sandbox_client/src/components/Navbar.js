@@ -13,6 +13,7 @@ const Navbar = ({userName, admin}) => {
 
   return (
     <nav className="navbar navbar-expand-md navbar-light bg-light">
+      <div class="container-fluid">
       <div className="navbar-brand" >SandBOX</div>
       <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span className="navbar-toggler-icon"></span>
@@ -34,6 +35,8 @@ const Navbar = ({userName, admin}) => {
           </li>
         </ul>
       </div>
+      </div>
+
     </nav>
   )
 }

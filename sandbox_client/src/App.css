@@ -101,6 +101,7 @@ thead{
 }
 
 td.col1 {
+  text-align: center;
   vertical-align: middle;
   width: 30px;
 }
@@ -112,6 +113,8 @@ td.col2 {
 }
 
 td.col3 {
+  background-color: azure;
+  padding: 5px;
   overflow: hidden;
   border-bottom: 2px solid gray;
 }
@@ -136,6 +139,12 @@ td.col5 {
 
 .mybtn {
   margin-top: 10px;
+}
+
+.del_btn{
+  margin: 3px;
+  font-size: 14px;
+  padding: 2px 10px;
 }
 
 @media screen and (max-width:450px) {

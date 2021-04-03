@@ -1,20 +1,12 @@
-import React, { useState, useEffect } from 'react'
-//import { AuthContext } from '../context/AuthContext'
-//import { useHttp } from '../hooks/http.hook'
+import React, { useState, useEffect, useCallback } from 'react'
 import { useHistory } from 'react-router-dom'
-import { UsersShareList } from './UsersShareList'
-//import { message } from '../utilites/message'
+import  UsersShareList  from './UsersShareList'
 import {useDispatch} from 'react-redux'
 import { saveNote, deleteNote } from '../redux/actions'
 import { connect } from 'react-redux'
-//import { Loader } from '../components/Loader'
 
 const NoteCard = ({ note, allUserList,token,loading,userId }) => {
   const history = useHistory()
-  //const {  request } = useHttp()
-  //const { message2 } = useContext(AuthContext)
-  //const auth = useContext(AuthContext)
-  //const {getUsers} = useContext(AuthContext)
   const [UsersListToSave, setUsersListToSave] = useState([])
   const dispatch = useDispatch()
   
@@ -30,6 +22,12 @@ const NoteCard = ({ note, allUserList,token,loading,userId }) => {
   const [noteEdit, setNoteEdit] = useState({
     noteNameId: note._id, noteNameEdit: note.name, noteTextEdit: note.notetext,shared:note.shared
   })
+  
+  const setUsersListToSaveCB = useCallback(
+    (UList)=>{setUsersListToSave(UList)
+
+    },[]
+  )
 
   const changeHandler = event => {
     setNoteEdit({ ...noteEdit, [event.target.name]: event.target.value })
@@ -74,7 +72,7 @@ const NoteCard = ({ note, allUserList,token,loading,userId }) => {
           Расшарить заметку
         </button>
         <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-          <UsersShareList allUserList={allUserList} noteEdit={note} UsersListToSave={UsersListToSave} setUsersListToSave={setUsersListToSave} />
+          <UsersShareList allUserList={allUserList} noteEdit={note} UsersListToSave={UsersListToSave} setUsersListToSaveCB={setUsersListToSaveCB} />
         </div>
       </div>
 
@@ -87,18 +85,14 @@ const NoteCard = ({ note, allUserList,token,loading,userId }) => {
         <div className="modal-dialog">
           <div className="modal-content">
             <div className="modal-header">
-              <h5 className="modal-title" id="exampleModalLabel">Modal title</h5>
-              <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
+              <button type="button" className="btn-close" data-dismiss="modal" aria-label="Close"/>
+                
             </div>
             <div className="modal-body">
               Удалить заметку: {note.name} ???
       </div>
             <div className="modal-footer">
               <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
-              {/* <button onClick={DeleteHandler} type="button" data-dismiss="modal" className="btn btn-danger">Удалить</button> */}
-              {/* <button onClick={()=>{dispatch(deleteNote({id:note._id,token}))}} type="button" data-dismiss="modal" className="btn btn-danger">Удалить</button> */}
               <button onClick={deleteHandler} type="button" data-dismiss="modal" className="btn btn-danger">Удалить</button>
             </div>
           </div>

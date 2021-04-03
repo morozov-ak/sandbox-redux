@@ -21,7 +21,7 @@ export const Modal = ({ note,userId }) => {
       onClick={(event) => { event.stopPropagation() }} 
       disabled={note.owner===userId?"":"disabled"} 
       type="button" 
-      className="btn btn-danger" 
+      className="btn btn-danger del_btn" 
       data-toggle="modal" 
       data-target={`#f${note._id}`}
       >

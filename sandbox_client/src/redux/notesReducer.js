@@ -19,7 +19,8 @@ const initialState={
     users:[],
     note:[],
     adminedNotes:[],
-    adminedUsers:[]
+    adminedUsers:[],
+    chekedUsers:[]
 
 }
 export const notesReducer=(state = initialState,{type,payload})=>{
