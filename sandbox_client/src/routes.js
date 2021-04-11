@@ -9,6 +9,7 @@ import AllNotesOf from './pages/AllNotesOf'
 import { RegistrationPage } from './pages/RegistrationPage'
 import SharedNotesPage from './pages/SharedNotesPage'
 import ChangePassword from './pages/ChangePassword'
+import DiagramPage from './pages/DiagramPage'
 
 export const useRoutes = isAuthenticated =>{
     if (isAuthenticated){
@@ -38,6 +39,9 @@ export const useRoutes = isAuthenticated =>{
                 <Route path="/AdminTools" exact>
                     <AdminTools />
                 </Route>
+                <Route path="/Diagram" exact>
+                    <DiagramPage/>
+                </Route>
                 <Route path="/AllNotesOf/:id">
                     <AllNotesOf />
                 </Route>
@@ -47,8 +51,10 @@ export const useRoutes = isAuthenticated =>{
         )
     }
     return(
+        
+        //<DiagramPage/>
+        
         <Switch>
-            
             <Route path="/RegistrationPage" exact>
                     <RegistrationPage/>
             </Route>

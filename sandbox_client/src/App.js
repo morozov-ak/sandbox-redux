@@ -34,7 +34,6 @@ function App({token}) {
         
         <div className="container">
           {routes}
-      
         </div>
       </Router>
     </AuthContext.Provider>

@@ -24,6 +24,7 @@ const Navbar = ({userName, admin}) => {
           <li className="nav-item"><NavLink to="/shared_notes" className="nav-link">Расшаренные заметки</NavLink></li>
           <li className="nav-item"><NavLink to="/Create" className="nav-link">Создать</NavLink></li>
           {admin?<li className="nav-item"><NavLink to="/AdminTools" className="nav-link">Администрирование</NavLink></li> : ""}
+          <li className="nav-item"><NavLink to="/Diagram" className="nav-link">Графики</NavLink></li>
           <li className="nav-item dropdown">
               <span className="nav-link dropdown-toggle"  id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 {userName}

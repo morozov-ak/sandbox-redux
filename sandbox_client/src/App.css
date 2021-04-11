@@ -218,3 +218,65 @@ td.col5 {
     opacity: 0;
   }
 }
+.CanvasWrapper{
+  position: fixed;
+  left:100px;
+  width: calc(100% - 100px);
+  height: calc(100% - 56px);
+}
+
+.myCanvas{
+  /* position: fixed; */
+  border: 5px solid red;
+  height: 100%;
+  width: 100%;
+  left: 100px;
+  
+}
+.canvasBtn{
+  left:100px;
+  position: fixed;
+}
+.canvasBtn2{
+  left:50px;
+  position: fixed;
+}
+.AsideMenu{
+  background-color: white;
+  position: fixed;
+  box-sizing: border-box;
+  flex-wrap: wrap;
+  left:0px;
+  top:56px;
+  width: 100px;
+  height: 100%;
+  border: 2px solid green
+}
+.AsideMenuItem{
+  margin: 0;
+  padding: 0;
+  background-color: transparent;
+  /* box-sizing: border-box; */
+  left:0px;
+  top:0px;
+  width: 100%;
+  height: 100px;
+  border: 3px solid blue;
+}
+.AsideMenuItem:hover{
+  background-color: aqua;
+}
+
+.AsideDropMenu{
+  background-color: wheat;
+  position: absolute;
+  box-sizing: border-box;
+  flex-wrap: wrap;
+  left:98px;
+  top:-2px;
+  width: 100px;
+  height: 100%;
+  border: 2px solid green
+}
+
+
