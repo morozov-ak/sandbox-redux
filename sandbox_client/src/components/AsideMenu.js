@@ -1,11 +1,8 @@
-import React, { useEffect, useRef, useState } from 'react'
-import { Loader } from '../components/Loader'
-import { NotesList } from '../components/NotesList'
-import { findNotes } from '../redux/actions.js'
-import { useDispatch } from 'react-redux'
+import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
-import { getChartData } from '../data'
-const PADDING = 75
+
+
+//const PADDING = 75
 
 
 const AsideMenu = (props) => {
@@ -13,11 +10,12 @@ const AsideMenu = (props) => {
     const[AsideMenuItemSwitch,setAsideMenuItemSwitch]=useState("")
     
     function idHandler(event) {
-        console.log(event.target.closest("AsideMenuButton"))
-        if(!event.target.closest("AsideMenuButton")){
+        console.log("AM2:",event.target.closest("#AsideMenu"))
+        if( !event.target.closest("#AsideMenu") ){
+            console.log("AM:",event.target.closest("AsideMenuButton"))
             setAsideMenuItemSwitch(null)
         }
-        if(event.target.id=="AsideMenuButton"){
+        if(event.target.id==="AsideMenuButton"){
             console.log(event.target.value)
             setAsideMenuItemSwitch(event.target.value)
         }
@@ -39,20 +37,22 @@ const AsideMenu = (props) => {
     function renderSwitch(AsideMenuItemSwitch) {
         switch (AsideMenuItemSwitch) {
             case 'first':
-                return (<div className="AsideDropMenu">first</div>);
+                return (
+                    <div className="AsideDropMenu" id="AsideDropMenu">1st</div>
+                );
             case 'second':
-                return (<div className="AsideDropMenu">second</div>);
+                return (<div className="AsideDropMenu" id="AsideDropMenu">second</div>);
             case 'third':
-                return (<div className="AsideDropMenu">third</div>);
+                return (<div className="AsideDropMenu" id="AsideDropMenu">third</div>);
             case 'fourth':
-                return (<div className="AsideDropMenu">fourth</div>);
+                return (<div className="AsideDropMenu" id="AsideDropMenu">fourth</div>);
             default:
                 return '';
         }
     }
 
     return (
-        <div className="AsideMenu">
+        <div className="AsideMenu" id="AsideMenu">
             <button className="AsideMenuItem" id="AsideMenuButton" value="first" >dfgh</button>
             <button className="AsideMenuItem" id="AsideMenuButton" value="second" >dfgh</button>
             <button className="AsideMenuItem" id="AsideMenuButton" value="third" >dfgh</button>

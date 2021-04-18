@@ -1,11 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react'
-import { Loader } from '../components/Loader'
-import { NotesList } from '../components/NotesList'
-import { findNotes } from '../redux/actions.js'
-import { useDispatch } from 'react-redux'
+import React, { useEffect, useState,useCallback } from 'react'
+
 import { connect } from 'react-redux'
 import  {getChartData} from '../data'
-import Diagram from '../components/Diagram'
 import AsideMenu from '../components/AsideMenu'
 const PADDING = 75
 
@@ -37,18 +33,26 @@ const DiagramPage = (props) => {
         console.log("sdf")
         setTrigger(prev=>!prev)
     }
-    function scaleCanvas(event){
+    
+    const scaleCanvas = useCallback((event) => {
+        console.log("event.deltaY",event.deltaY)
         setScale(
-            prev=>prev+event.deltaY*1
+            prev=>event.deltaY>0? prev+3:prev-3
         )
-        console.log(event.deltaY)
-        console.log(scale)
-        //scale=scale+event.deltaY*0.1
-    }
-    function dragCanvas(event){
-        console.log(event.clientX)
-        //scale=scale+event.deltaY*0.1
-    }
+    }, [])
+    
+    // function scaleCanvas(event){
+    //     console.log("event.deltaY",event.deltaY)
+    //     setScale(
+    //         prev=>event.deltaY>0? prev+3:prev-3
+    //     )
+    // }
+    
+    
+    // function dragCanvas(event){
+    //     console.log(event.clientX)
+    //     //scale=scale+event.deltaY*0.1
+    // }
 
     useEffect(
         () => {
@@ -89,7 +93,7 @@ const DiagramPage = (props) => {
                 window.removeEventListener("wheel", scaleCanvas);
                 //window.removeEventListener("mousemove", dragCanvas);
             })
-        }, [useWidth,resTrigger,usePosition,scale]
+        }, [useWidth,resTrigger,usePosition,scale,scaleCanvas]
     )
 
     return (
