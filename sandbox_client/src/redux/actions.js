@@ -119,13 +119,15 @@ export function reduxLogin(form) {
     return async dispatch => {
         try {
             const data = await request('/api/auth/login', 'POST', { ...form })
+            //console.log("data::",data)
+            if(data.error || (data.status===500)){throw data}
             dispatch({ type: AUTH_LOGIN, payload: data })
-            if(data.error){throw data}
             localStorage.setItem(storageName, JSON.stringify(data))
             message(`Добро пожаловать, ${data.userName}!`)
         }
         catch (error) {
-            message(error.error)
+            //console.log("error catched")
+            message("произошла ошибка")
         }
     }
 }

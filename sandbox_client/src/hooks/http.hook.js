@@ -7,6 +7,8 @@ export const request = async (url, method = 'GET', body = null, headers = {}) =>
                 headers['Content-Type'] = 'application/json'
             }
             const response = await fetch(url, { method, body, headers })
+            if(response.status===500){throw response}
+            //console.log("response", response)
             const data = await response.json()
             if (data.e) {
                 throw data
