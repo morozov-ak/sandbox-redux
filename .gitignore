@@ -129,4 +129,4 @@ yarn-error.log*
 #mongodb config
 /config
 config/default.json
-models/mailer.js
+#models/mailer.js

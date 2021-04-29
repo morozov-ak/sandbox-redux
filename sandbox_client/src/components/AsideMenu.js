@@ -10,13 +10,13 @@ const AsideMenu = (props) => {
     const[AsideMenuItemSwitch,setAsideMenuItemSwitch]=useState("")
     
     function idHandler(event) {
-        console.log("AM2:",event.target.closest("#AsideMenu"))
+        //console.log("AM2:",event.target.closest("#AsideMenu"))
         if( !event.target.closest("#AsideMenu") ){
-            console.log("AM:",event.target.closest("AsideMenuButton"))
+            //console.log("AM:",event.target.closest("AsideMenuButton"))
             setAsideMenuItemSwitch(null)
         }
         if(event.target.id==="AsideMenuButton"){
-            console.log(event.target.value)
+            //console.log(event.target.value)
             setAsideMenuItemSwitch(event.target.value)
         }
 
@@ -25,7 +25,7 @@ const AsideMenu = (props) => {
     useEffect(
         ()=>{
             window.addEventListener("click", idHandler);
-            console.log("sdf")
+            //console.log("sdf")
             return(
                 ()=>{
                     window.removeEventListener("click", idHandler);
