@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
+import ParrentBubble from './ParrentBubble'
 
 
 //const PADDING = 75
@@ -38,7 +39,9 @@ const AsideMenu = (props) => {
         switch (AsideMenuItemSwitch) {
             case 'first':
                 return (
-                    <div className="AsideDropMenu" id="AsideDropMenu">1st</div>
+                    <div className="AsideDropMenu" id="AsideDropMenu">1st
+                        <ParrentBubble/>
+                    </div>
                 );
             case 'second':
                 return (<div className="AsideDropMenu" id="AsideDropMenu">second</div>);

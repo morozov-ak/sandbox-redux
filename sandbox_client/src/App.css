@@ -279,4 +279,12 @@ td.col5 {
   border: 2px solid green
 }
 
+.ParrentBubble{
+  position: static;
+  background-color: aqua;
+  height: 60px;
+  /* transform: rotate(45deg); */
+  /* width: 60px; */
+}
+
 
