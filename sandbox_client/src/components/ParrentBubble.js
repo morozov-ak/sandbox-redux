@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { connect } from 'react-redux'
+import ChildBubble from './ChildBubble'
 
 
 //const PADDING = 75
@@ -7,12 +7,12 @@ import { connect } from 'react-redux'
 
 const ParrentBubble = (props) => {
 
-    const[position,setPosition]=useState(0)
+    const[position,setPosition]=useState({x:0, y:0})
     
 
     function movehandler(event){
-        setPosition(event.clientX)
-        console.log(event.clientX)
+        setPosition({x:event.clientX,y:event.clientY})
+        console.log(position)
     }
 
     useEffect(
@@ -30,11 +30,9 @@ const ParrentBubble = (props) => {
     
 
     return (
-        // <div className="ParrentBubble" id="ParrentBubble" style={{rotate:position+"deg"}}>
-        //     dssvsv
-        // </div>
-        <div className="ParrentBubble" id="ParrentBubble" style={{transform: `rotate(${position}deg)`}}>
-            dssvsv
+        // <div className="ParrentBubble" id="ParrentBubble" style={{transform: `rotate(${position}deg)`}}>
+        <div className="ParrentBubble" id="ParrentBubble" style={{transform: `translate(${position.x/10}px,${position.y/10}px)`}}>
+            <ChildBubble position={position}/>
         </div>
 
 

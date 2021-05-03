@@ -283,8 +283,22 @@ td.col5 {
   position: static;
   background-color: aqua;
   height: 60px;
+  transition: all 1s;
   /* transform: rotate(45deg); */
   /* width: 60px; */
 }
+
+.childBubble{
+  top:33%;
+  margin: auto;
+  position: static;
+  background-color: red;
+  height: 60px;
+  transition: all .5s;
+  /* transform: rotate(45deg); */
+  /* width: 60px; */
+}
+
+
 
 
